@@ -37,6 +37,8 @@ import java.awt.event.KeyListener;
  * @version 11.11.2010.4
  */
 public class Joystick {
+	//TODO: Add button support using KeyListener, and implement offsets and noise.
+	
 	private final int JSHEIGHT = 500;//joy stick area height
 	private final int JSWIDTH = 500;//joy stick area width
 
@@ -185,8 +187,7 @@ public class Joystick {
         public void mouseReleased(MouseEvent e) {}
         public void mouseEntered(MouseEvent e) {}
         public void mouseExited(MouseEvent e) {}
-		public void keyPressed(KeyEvent e) {//TODO
-		}
+		public void keyPressed(KeyEvent e) {}
 		public void keyReleased(KeyEvent e) {}
 		public void keyTyped(KeyEvent e) {}
 		
