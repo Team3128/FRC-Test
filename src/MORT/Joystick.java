@@ -34,7 +34,7 @@ import java.awt.event.KeyListener;
 /**
  * Joystick emulation for FRC.
  * @author Nick DiRienzo, Patrick Jameson
- * @version 11.11.2010.4
+ * @version 11.11.2010.5
  */
 public class Joystick {
 	//TODO: Add button support using KeyListener, and implement offsets and noise.
