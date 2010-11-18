@@ -37,6 +37,7 @@ import java.awt.event.KeyListener;
  * @version 11.11.2010.4
  */
 public class Joystick {
+	private final int JSHEIGHT = 500;//joy stick area height
 
     private double x, y, z;
     private int xpos, ypos, zpos;
