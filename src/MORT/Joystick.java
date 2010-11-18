@@ -38,6 +38,7 @@ import java.awt.event.KeyListener;
  */
 public class Joystick {
 	private final int JSHEIGHT = 500;//joy stick area height
+	private final int JSWIDTH = 500;//joy stick area width
 
     private double x, y, z;
     private int xpos, ypos, zpos;
@@ -58,7 +59,7 @@ public class Joystick {
         frame = new JFrame("Joystick Emulator: " + port);
         
         frame.setLayout(new BorderLayout());
-        frame.setPreferredSize(new Dimension(500, 600));
+        frame.setPreferredSize(new Dimension(JSWIDTH, JSHEIGHT+100));
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -110,20 +111,20 @@ public class Joystick {
             }
         	
         	//draws x and y axis and bottom border of grid.
-            g.drawLine(0, 500/2, getWidth(), 500/2);
-            g.drawLine(getWidth()/2, 0, getWidth()/2, 500);
-            g.drawLine(0, 500, getWidth(), 500);
+            g.drawLine(0, JSHEIGHT/2, getWidth(), JSHEIGHT/2);
+            g.drawLine(getWidth()/2, 0, getWidth()/2, JSHEIGHT);
+            g.drawLine(0, JSHEIGHT, getWidth(), JSHEIGHT);
             
             //draws z axis
-            g.drawLine(20, 550, 480, 550);
-            g.drawLine(20, 525, 20, 575);
-            g.drawLine(480, 525, 480, 575);
+            g.drawLine(20,  JSHEIGHT+50, 480, JSHEIGHT+50);
+            g.drawLine(20,  JSHEIGHT+25, 20,  JSHEIGHT+75);
+            g.drawLine(480, JSHEIGHT+25, 480, JSHEIGHT+75);
             
             //draws zpos
             g.setColor(Color.red);
-            g.drawLine(20+(int)zpos, 525, 20+(int)zpos, 575);
+            g.drawLine(20+(int)zpos, JSHEIGHT+25, 20+(int)zpos, JSHEIGHT+75);
             g.setColor(Color.black);
-            g.drawString("z = " + round(z, 3), 225, 525);
+            g.drawString("z = " + round(z, 3), 225, JSHEIGHT+25);
             
             //drawing joystick and mouse positions
             g.drawString("Mouse: (" + xpos + ", " + ypos + ")", 5, 40);
@@ -143,9 +144,9 @@ public class Joystick {
             if(!mouseClicked) {
             	xpos = e.getX();
                 ypos = e.getY();
-                if (ypos > 500)
-                	ypos = 500;
-                x = (double)(xpos-500/2.0)/(500/2.0);
+                if (ypos > JSHEIGHT)
+                	ypos = JSHEIGHT;
+                x = (double)(xpos-JSHEIGHT/2.0)/(JSHEIGHT/2.0);
                 y = (double)((getWidth()/2.0)-ypos)/(getWidth()/2.0);
             }
             repaint();
