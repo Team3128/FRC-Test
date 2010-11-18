@@ -5,7 +5,7 @@
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
  *  (at your option) any later version.
-
+ *
  *  frcjcss is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -20,7 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 /**
- * A Victor emulator for FRC.
+ * A Victor speedcontroller emulation for FRC.
  * @author Nick DiRienzo
  * @version 11.12.2010.2
  */
@@ -70,5 +70,7 @@ public class Victor {
     public double get() {
         return speed;
     }
+    
+    //add pidWrite method?
 
 }
