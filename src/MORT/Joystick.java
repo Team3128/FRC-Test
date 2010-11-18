@@ -26,20 +26,19 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 
 /**
  * Joystick emulation for FRC.
  * @author Nick DiRienzo, Patrick Jameson
- * @version 11.11.2010.3
+ * @version 11.11.2010.4
  */
 public class Joystick {
 
-    private double x;
-    private double y;
-    private int xpos;
-    private int ypos;
-    private double xOffset;
-    private double yOffset;
+    private double x, y, z;
+    private int xpos, ypos, zpos;
+    private double xOffset, yOffset;
     private double drift;
 
     private boolean mouseClicked = false;
@@ -56,7 +55,7 @@ public class Joystick {
         frame = new JFrame("Joystick Emulator: " + port);
         
         frame.setLayout(new BorderLayout());
-        frame.setPreferredSize(new Dimension(500, 500));
+        frame.setPreferredSize(new Dimension(500, 600));
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -67,9 +66,7 @@ public class Joystick {
         frame.setVisible(true);        
     }
     
-    private void createDrift() {
-    	//TODO: Add Joystick drift
-    }
+    private void createDrift() {}
 
     /**
      * The X value of the Joystick.
@@ -82,34 +79,54 @@ public class Joystick {
     public double getY() {
         return y;
     }
+    
+    public double getZ() {
+        return z;
+    }
 
     @SuppressWarnings("serial")
-    class Grid extends JPanel implements MouseListener, MouseMotionListener {
+    class Grid extends JPanel implements MouseListener, MouseMotionListener, MouseWheelListener {
     	Grid() {
-    	addMouseListener(this);
+    		addMouseListener(this);
             addMouseMotionListener(this);
+            addMouseWheelListener(this);
     	}
         protected void paintComponent(Graphics g) {
+        	g.setFont(new Font("Helvetica", Font.BOLD, 14));
+        	
         	//clears graph.
         	g.setColor(Color.white);
         	g.fillRect(0, 0, grid.getWidth(), grid.getHeight());
         	g.setColor(Color.black);
         	
-        	//draws x and y axis.
-            g.drawLine(0, getHeight()/2, getWidth(), getHeight()/2);
-            g.drawLine(getWidth()/2, 0, getWidth()/2, getHeight());
-            
-            //checks if trigger is set and draws a red filled rectangle if it is.
+        	//checks if trigger is set and draws a red filled rectangle if it is.
             if (trigger) {
             	g.setColor(Color.red);
             	g.fillRect(xpos-20, ypos-20, 40, 40);
             	g.setColor(Color.black);
             }
+        	
+        	//draws x and y axis and bottom border of grid.
+            g.drawLine(0, 500/2, getWidth(), 500/2);
+            g.drawLine(getWidth()/2, 0, getWidth()/2, 500);
+            g.drawLine(0, 500, getWidth(), 500);
+            
+            //draws z axis
+            g.drawLine(20, 550, 480, 550);
+            g.drawLine(20, 525, 20, 575);
+            g.drawLine(480, 525, 480, 575);
+            
+            //draws zpos
+            g.setColor(Color.red);
+            g.drawLine(20+(int)zpos, 525, 20+(int)zpos, 575);
+            g.setColor(Color.black);
+            g.drawString("z = " + round(z, 3), 225, 525);
             
             //drawing joystick and mouse positions
-            g.setFont(new Font("Helvetica", Font.BOLD, 14));
-            g.drawString("(MouseX: " + xpos + ", MouseY: " + ypos + ")", 0, getHeight()-20);
-            g.drawString("(JoystickX: " + (((int)(x*1000))/1000.0) + ", JoystickY: " + (((int)(y*1000))/1000.0) + ")", 0, 20);
+            g.drawString("Mouse: (" + xpos + ", " + ypos + ")", 5, 40);
+            g.drawString("Joystick: (" + round(x,3) + ", " + round(y, 3) + ")", 5, 20);
+            g.drawString("Trigger is " + (trigger?"on.":"off."), 5, 60);
+            g.drawString("Joystick is " + (mouseClicked?"":"not ") + "locked", 5, 80);
             
             //box around cursor
             g.drawRect(xpos-20, ypos-20, 40, 40);
@@ -123,10 +140,16 @@ public class Joystick {
             if(!mouseClicked) {
             	xpos = e.getX();
                 ypos = e.getY();
-                x = (double)(xpos-getHeight()/2.0)/(getHeight()/2.0);
+                if (ypos > 500)
+                	ypos = 500;
+                x = (double)(xpos-500/2.0)/(500/2.0);
                 y = (double)((getWidth()/2.0)-ypos)/(getWidth()/2.0);
             }
             repaint();
+        }
+        
+        public double round(double preNum, int decPlaces) {
+        	return (double)Math.round((preNum*Math.pow(10, decPlaces)))/Math.pow(10, decPlaces);
         }
 
         public void mouseMoved(MouseEvent e) {
@@ -144,9 +167,20 @@ public class Joystick {
         		trigger = !trigger;
         }
         
+        public void mouseWheelMoved(MouseWheelEvent e) {
+			zpos-=e.getWheelRotation()*10;
+			if (zpos < 0)
+				zpos = 0;
+			else if (zpos > 460)
+				zpos = 460;
+			z = (double)zpos/460;
+			repaint();
+		}
+        
         public void mouseClicked(MouseEvent e) {}
         public void mouseReleased(MouseEvent e) {}
         public void mouseEntered(MouseEvent e) {}
         public void mouseExited(MouseEvent e) {}
+		
     }
 }
