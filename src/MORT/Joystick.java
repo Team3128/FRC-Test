@@ -183,21 +183,9 @@ public class Joystick {
         public void mouseReleased(MouseEvent e) {}
         public void mouseEntered(MouseEvent e) {}
         public void mouseExited(MouseEvent e) {}
-
-		public void keyPressed(KeyEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void keyPressed(KeyEvent e) {}
+		public void keyReleased(KeyEvent e) {}
+		public void keyTyped(KeyEvent e) {}
 		
     }
 }
