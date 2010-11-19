@@ -99,6 +99,14 @@ public class Joystick {
     public double getZ() {
         return z;
     }
+    
+    /**
+     * The current state of the trigger on the Joystick.
+     * @return True if the trigger is being pressed down, false if not.
+     */
+    public boolean getTrigger() {
+    	return trigger;
+    }
 
     @SuppressWarnings("serial")
     class Grid extends JPanel implements MouseListener, MouseMotionListener, MouseWheelListener, KeyListener {
