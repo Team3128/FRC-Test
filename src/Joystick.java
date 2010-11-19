@@ -205,8 +205,7 @@ public class Joystick {
 				zpos = 0;
 			else if (zpos > 460)
 				zpos = 460;
-			z = ((double)zpos/460)-1;
-			System.out.println(z);
+			z = (double)zpos/460;
 			repaint();
 		}
         
