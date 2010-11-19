@@ -37,7 +37,7 @@ import java.awt.event.KeyListener;
  * @version 11.11.2010.5
  */
 public class Joystick {
-	//TODO: Add button support using KeyListener, and implement offsets and noise.
+	//TODO: Z-Axis zeroes at center of line and ranges from -1.0 to +1.0 ,add button support using KeyListener, and implement offsets and noise.
 	
 	private final int JSHEIGHT = 500;//joy stick area height
 	private final int JSWIDTH = 500;//joy stick area width
