@@ -27,7 +27,6 @@ import javax.swing.JLabel;
 public class Victor {
 
     private double speed;
-    private int channel;
 
     private JFrame frame;
     private JLabel victorNum;
@@ -38,7 +37,6 @@ public class Victor {
      * @param channel The Digital Sidecar channel it should be connected to.
      */
     public Victor(int channel) {
-        this.channel = channel;
         frame = new JFrame("Victor Emulator: " + channel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);

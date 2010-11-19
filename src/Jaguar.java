@@ -27,29 +27,27 @@ import javax.swing.JLabel;
 public class Jaguar {
 
     private double speed;
-    private int channel;
 
     private JFrame frame;
-    private JLabel victorNum;
-    private JLabel victorSpeed;
+    private JLabel jaguarNum;
+    private JLabel jaguarSpeed;
 
     /**
      * Creates a new Jaguar speed controller.
      * @param channel The Digital Sidecar channel it should be connected to.
      */
     public Jaguar(int channel) {
-        this.channel = channel;
         frame = new JFrame("Jaguar Emulator: " + channel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setLayout(new FlowLayout());
         frame.setSize(300, 50);
 
-        JaguarNum = new JLabel("Jaguar " + channel + ": ");
-        frame.add(JaguarNum);
+        jaguarNum = new JLabel("Jaguar " + channel + ": ");
+        frame.add(jaguarNum);
 
-        JaguarSpeed = new JLabel((speed*100) + "%");
-        frame.add(JaguarSpeed);
+        jaguarSpeed = new JLabel((speed*100) + "%");
+        frame.add(jaguarSpeed);
 
         frame.setVisible(true);
     }
@@ -60,7 +58,7 @@ public class Jaguar {
      */
     public void set(double speed) {
         this.speed = speed;
-        JaguarSpeed.setText((int)((speed*100)*10)/10.0 + "%");
+        jaguarSpeed.setText((int)((speed*100)*10)/10.0 + "%");
     }
 
     /**
