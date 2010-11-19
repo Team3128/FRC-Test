@@ -37,7 +37,9 @@ import java.awt.event.KeyListener;
  * @version 11.11.2010.5
  */
 public class Joystick {
-	//TODO: Z-Axis zeroes at center of line and ranges from -1.0 to +1.0 ,add button support using KeyListener, and implement offsets and noise.
+	//TODO: Z-Axis zeroes at center of line and ranges from -1.0 to +1.0.
+	//TODO: Add Joystick button support using KeyListener
+	//TODO: Implement offsets and noise.
 	
 	private final int JSHEIGHT = 500;//joy stick area height
 	private final int JSWIDTH = 500;//joy stick area width
@@ -54,8 +56,8 @@ public class Joystick {
     private Grid grid;
 
     /**
-     * Creates a new Joystick window based on the cartesian coordinate system.
-     * @param port The "port" the Joystick is connected to on the Driver Station.
+     * Creates a new Joystick window based on the Cartesian coordinate system.
+     * @param port The port the Joystick is connected to on the Driver Station.
      */
     public Joystick(int port) {
         frame = new JFrame("Joystick Emulator: " + port);
@@ -82,10 +84,18 @@ public class Joystick {
         return x;
     }
 
+    /**
+     * The Y value of the Joystick.
+     * @return The Y value of the Joystick, ranges from -1.0 to +1.0.
+     */
     public double getY() {
         return y;
     }
     
+    /**
+     * The Z value of the Joystick.
+     * @return The Z value of the Joystick, ranges from -1.0 to +1.0.
+     */
     public double getZ() {
         return z;
     }
@@ -172,7 +182,13 @@ public class Joystick {
         	if (e.getButton() == 1)
         		mouseClicked = !mouseClicked;
         	else if (e.getButton() == 3)
-        		trigger = !trigger;
+        		trigger = true;
+        }
+        
+        public void mouseReleased(MouseEvent e) {
+        	if (e.getButton() == 3) {
+        		trigger = false;
+        	}
         }
         
         public void mouseWheelMoved(MouseWheelEvent e) {
@@ -186,7 +202,6 @@ public class Joystick {
 		}
         
         public void mouseClicked(MouseEvent e) {}
-        public void mouseReleased(MouseEvent e) {}
         public void mouseEntered(MouseEvent e) {}
         public void mouseExited(MouseEvent e) {}
 		public void keyPressed(KeyEvent e) {}

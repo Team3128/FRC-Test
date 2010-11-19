@@ -23,8 +23,8 @@
 public class Robot {
 	
     public static void main(String[] args) {
-    	
-        while(true) {
+
+    	while(true) {
         	//Robot logic goes here
         }
     }
