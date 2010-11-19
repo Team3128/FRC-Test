@@ -23,9 +23,6 @@
 public class Robot {
 	
     public static void main(String[] args) {
-
-    	while(true) {
-        	//Robot logic goes here
-        }
+    	Joystick joy = new Joystick(1);
     }
 }
