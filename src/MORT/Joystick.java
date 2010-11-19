@@ -93,9 +93,11 @@ public class Joystick {
     @SuppressWarnings("serial")
     class Grid extends JPanel implements MouseListener, MouseMotionListener, MouseWheelListener, KeyListener {
     	Grid() {
+    		this.setFocusable(true);
     		addMouseListener(this);
             addMouseMotionListener(this);
             addMouseWheelListener(this);
+            addKeyListener(this);
     	}
         protected void paintComponent(Graphics g) {
         	g.setFont(new Font("Helvetica", Font.BOLD, 14));
