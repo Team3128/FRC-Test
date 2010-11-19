@@ -24,8 +24,6 @@ public class Robot {
 	
     public static void main(String[] args) {
     	
-    	Joystick j = new Joystick(1);
-    	    	  	
         while(true) {
         	//Robot logic goes here
         }
