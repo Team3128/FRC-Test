@@ -34,10 +34,9 @@ import java.awt.event.KeyListener;
 /**
  * Joystick emulation for FRC.
  * @author Nick DiRienzo, Patrick Jameson
- * @version 11.11.2010.5
+ * @version 11.11.2010.6
  */
 public class Joystick {
-	//TODO: Z-Axis zeroes at center of line and ranges from -1.0 to +1.0.
 	//TODO: Add Joystick button support using KeyListener
 	//TODO: Implement offsets and noise.
 	
@@ -45,7 +44,7 @@ public class Joystick {
 	private final int JSWIDTH = 500;//joy stick area width
 
     private double x, y, z;
-    private int xpos, ypos, zpos;
+    private int xpos, ypos, zpos = 230;
     private double xOffset, yOffset;
     private double drift;
 
@@ -111,7 +110,6 @@ public class Joystick {
     @SuppressWarnings("serial")
     class Grid extends JPanel implements MouseListener, MouseMotionListener, MouseWheelListener, KeyListener {
     	Grid() {
-    		this.setFocusable(true);
     		addMouseListener(this);
             addMouseMotionListener(this);
             addMouseWheelListener(this);
@@ -191,11 +189,13 @@ public class Joystick {
         		mouseClicked = !mouseClicked;
         	else if (e.getButton() == 3)
         		trigger = true;
+        	repaint();
         }
         
         public void mouseReleased(MouseEvent e) {
         	if (e.getButton() == 3) {
         		trigger = false;
+        		repaint();
         	}
         }
         
@@ -205,7 +205,7 @@ public class Joystick {
 				zpos = 0;
 			else if (zpos > 460)
 				zpos = 460;
-			z = (double)zpos/460;
+			z = ((double)zpos/460*2)-1;
 			repaint();
 		}
         
