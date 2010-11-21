@@ -36,17 +36,25 @@ import java.awt.event.KeyListener;
  * @author Nick DiRienzo, Patrick Jameson
  * @version 11.11.2010.6
  */
-public class Joystick {
+public class Joystick implements KeyListener {
 	//TODO: Add Joystick button support using KeyListener
+    //      -The above is done for one button at a time. Detecting many buttons being pressed at the same 
+    //       time is apparently not a trivial task for at least linux.
 	//TODO: Implement offsets and noise.
 	
 	private final int JSHEIGHT = 500;//joy stick area height
 	private final int JSWIDTH = 500;//joy stick area width
 
-    private double x, y, z;
-    private int xpos, ypos, zpos = 230;
+    private double x, y, z;//-1 to 1
+    private int xpos, ypos, zpos;//pixel position. z is 0-460.
     private double xOffset, yOffset;
     private double drift;
+    
+    private int button;
+    private String buttonStr;
+    
+    private long keyTime;
+    private boolean isTestingTime;
 
     private boolean mouseClicked = false;
     private boolean trigger = false;
@@ -68,6 +76,11 @@ public class Joystick {
 
         grid = new Grid();
         frame.add(grid, BorderLayout.CENTER);
+        
+        frame.addKeyListener(this);
+        
+        z = 230; //starting pixel position of z axis(out of 460)
+        button = -1;//-1 == no button being pressed.
         
         frame.pack();
         frame.setVisible(true);        
@@ -106,16 +119,36 @@ public class Joystick {
     public boolean getTrigger() {
     	return trigger;
     }
+    
+    /**
+     * @return true if the provided button is being pressed false if not.
+     */
+    public boolean getRawButton(int but) {
+        return (but == button);
+    }
+    
+    public void keyPressed(KeyEvent e) {
+        int key = (int)e.getKeyChar()-48;
+        if (key >= 0 && key <= 9) {
+            button = key;
+        }
+        grid.repaint();
+    }
+    
+    public void keyReleased(KeyEvent e) {
+    	button = -1;
+    	grid.repaint();
+    }
+	public void keyTyped(KeyEvent e) {}
 
     @SuppressWarnings("serial")
-    class Grid extends JPanel implements MouseListener, MouseMotionListener, MouseWheelListener, KeyListener {
+    class Grid extends JPanel implements MouseListener, MouseMotionListener, MouseWheelListener {
     	Grid() {
     		addMouseListener(this);
             addMouseMotionListener(this);
             addMouseWheelListener(this);
-            addKeyListener(this);
     	}
-        protected void paintComponent(Graphics g) {
+        public void paintComponent(Graphics g) {
         	g.setFont(new Font("Helvetica", Font.BOLD, 14));
         	
         	//clears graph.
@@ -151,6 +184,7 @@ public class Joystick {
             g.drawString("Joystick: (" + round(x,3) + ", " + round(y, 3) + ")", 5, 20);
             g.drawString("Trigger is " + (trigger?"on.":"off."), 5, 60);
             g.drawString("Joystick is " + (mouseClicked?"":"not ") + "locked", 5, 80);
+            g.drawString("Buttons being pressed: " + ((button != -1) ? button : ""), 5, 100);
             
             //box around cursor
             g.drawRect(xpos-20, ypos-20, 40, 40);
@@ -212,7 +246,7 @@ public class Joystick {
         public void mouseClicked(MouseEvent e) {}
         public void mouseEntered(MouseEvent e) {}
         public void mouseExited(MouseEvent e) {}
-		public void keyPressed(KeyEvent e) {}
+		
 		public void keyReleased(KeyEvent e) {}
 		public void keyTyped(KeyEvent e) {}
 		
