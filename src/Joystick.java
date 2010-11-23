@@ -34,7 +34,7 @@ import java.awt.event.KeyListener;
 /**
  * Joystick emulation for FRC.
  * @author Nick DiRienzo, Patrick Jameson
- * @version 11.11.2010.6
+ * @version 11.11.2010.7
  */
 public class Joystick implements KeyListener {
     //TODO: Add Joystick button support using KeyListener
@@ -121,7 +121,8 @@ public class Joystick implements KeyListener {
     }
     
     /**
-     * @return true if the provided button is being pressed false if not.
+     * Get the button value for buttons 1 through 10, with 0 being 10.
+     * @return True if the provided button is being pressed, false if not.
      */
     public boolean getRawButton(int but) {
         return (but == button);
@@ -130,7 +131,12 @@ public class Joystick implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int key = (int)e.getKeyChar()-48;
         if (key >= 0 && key <= 9) {
-            button = key;
+        	if(key == 0) {
+        		button = 10;
+        	}
+        	else {
+        		button = key;
+        	}
         }
         grid.repaint();
     }
@@ -184,7 +190,7 @@ public class Joystick implements KeyListener {
             g.drawString("Joystick: (" + round(x,3) + ", " + round(y, 3) + ")", 5, 20);
             g.drawString("Trigger is " + (trigger?"on.":"off."), 5, 60);
             g.drawString("Joystick is " + (mouseClicked?"":"not ") + "locked", 5, 80);
-            g.drawString("Buttons being pressed: " + ((button != -1) ? button : ""), 5, 100);
+            g.drawString("Button being pressed: " + ((button != -1) ? button : "None"), 5, 100);
             
             //box around cursor
             g.drawRect(xpos-20, ypos-20, 40, 40);
