@@ -57,7 +57,6 @@ public class Servo {
 	public void set(double value) {
 		position = limit(value);
 		posLabel.setText("Position: " + position); 
-		System.out.println(position);
 	}
 	
 	/**
