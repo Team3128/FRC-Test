@@ -57,6 +57,7 @@ public class Servo {
 	public void set(double value) {
 		position = limit(value);
 		posLabel.setText("Position: " + position); 
+		System.out.println(position);
 	}
 	
 	/**
@@ -72,7 +73,7 @@ public class Servo {
 	 * @return The limited value if greater than 1.0 or less than -1.0, otherwise the original value.
 	 */
 	private double limit(double value) {
-		double l = 0.0;
+		double l = value;
 		if(value > 1.0) {
 			l = 1.0;
 		}
@@ -80,6 +81,10 @@ public class Servo {
 			l = -1.0;
 		}
 		return l;
+	}
+	
+	public String toString() {
+		return "Servo";
 	}
 
 }
