@@ -24,7 +24,7 @@ import javax.swing.JLabel;
 /**
  * FRC Servo simulation.
  * @author Nick DiRienzo
- * @version 11.23.2010.0
+ * @version 11.23.2010.1
  */
 public class Servo {
 	//TODO: Implement angle. The servo angle is linear to the PWM value (assumed by FIRST).
