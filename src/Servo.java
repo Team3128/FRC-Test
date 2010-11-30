@@ -40,7 +40,8 @@ public class Servo {
 		
 		frame = new JFrame("Servo Simulator: " + channel);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setPreferredSize(new Dimension(300, 100));
+		frame.setLocation(510,0);
+		frame.setPreferredSize(new Dimension(300, 50));
 		frame.setLayout(new BorderLayout());
 		
 		posLabel = new JLabel("Position: " + position);
