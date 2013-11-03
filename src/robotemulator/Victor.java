@@ -1,3 +1,5 @@
+package robotemulator;
+
 /*
  *  This file is part of frcjcss.
  *

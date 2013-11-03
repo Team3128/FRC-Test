@@ -1,3 +1,5 @@
+package robotemulator;
+
 /*
  *  This file is part of frcjcss.
  *
@@ -24,7 +26,7 @@ import javax.swing.JLabel;
 /**
  * FRC Servo simulation.
  * @author Nick DiRienzo
- * @version 11.23.2010.1
+ * @version 11.23.2010.0
  */
 public class Servo {
 	//TODO: Implement angle. The servo angle is linear to the PWM value (assumed by FIRST).
@@ -40,8 +42,7 @@ public class Servo {
 		
 		frame = new JFrame("Servo Simulator: " + channel);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLocation(510,0);
-		frame.setPreferredSize(new Dimension(300, 50));
+		frame.setPreferredSize(new Dimension(300, 100));
 		frame.setLayout(new BorderLayout());
 		
 		posLabel = new JLabel("Position: " + position);
@@ -73,7 +74,7 @@ public class Servo {
 	 * @return The limited value if greater than 1.0 or less than -1.0, otherwise the original value.
 	 */
 	private double limit(double value) {
-		double l = value;
+		double l = 0.0;
 		if(value > 1.0) {
 			l = 1.0;
 		}
@@ -81,10 +82,6 @@ public class Servo {
 			l = -1.0;
 		}
 		return l;
-	}
-	
-	public String toString() {
-		return "Servo";
 	}
 
 }

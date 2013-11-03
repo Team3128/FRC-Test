@@ -1,3 +1,5 @@
+package robotemulator;
+
 /*
  *  This file is part of frcjcss.
  *
@@ -95,7 +97,7 @@ public class Jaguar implements ComponentListener, ActionListener {
      * Gets the most recent value of the Jaguar.
      * @return The most recent value of the Jaguar from -1.0 and +1.0.
      */
-    public double get() {
+    public double getSpeed() {
         return speed;
     }
     

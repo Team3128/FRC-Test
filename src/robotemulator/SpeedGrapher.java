@@ -1,3 +1,5 @@
+package robotemulator;
+
 /**
  * Handles a graphing environment for the speeds of speed controllers such as Victors and Jaguars.
  * 

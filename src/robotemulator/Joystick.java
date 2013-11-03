@@ -1,3 +1,5 @@
+package robotemulator;
+
 /*
  *  This file is part of frcjcss.
  *
@@ -86,7 +88,6 @@ public class Joystick implements KeyListener {
         frame.setVisible(true);        
     }
     
-    private void createDrift() {}
 
     /**
      * The X value of the Joystick.
@@ -112,7 +113,16 @@ public class Joystick implements KeyListener {
         return z;
     }
     
-    /**
+    public double getRawAxis(int axis) {
+        switch (axis) {
+            case 1: return getX();
+            case 2: return getY();
+            case 3: return getZ();
+            default: return 0;
+        }
+    }
+    
+     /**
      * The current state of the trigger on the Joystick.
      * @return True if the trigger is being pressed down, false if not.
      */
