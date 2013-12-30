@@ -57,7 +57,7 @@ public class RobotDrive {
         jag2.set(rightMotorSpeed);
     }
     public void arcadeDrive(Joystick joystick1) {
-        arcadeDrive(joystick1.getRawAxis(1), joystick1.getRawAxis(2));
+        arcadeDrive(joystick1.getRawAxis(2), -joystick1.getRawAxis(1));
     }
     
     public void tankDrive(double leftValue, double rightValue) {
@@ -79,7 +79,7 @@ public class RobotDrive {
     }
     
     public void tankDrive(Joystick joystick1, Joystick joystick2) {
-        tankDrive(joystick1.getRawAxis(1), joystick2.getRawAxis(1));
+        tankDrive(joystick1.getRawAxis(2), joystick2.getRawAxis(2));
     }   
     
     public void mecanumDrive_Cartesian(double x, double y, double rotation, double gyroAngle) {

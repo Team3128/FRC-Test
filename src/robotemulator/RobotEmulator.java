@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class RobotEmulator {
     static int input;
     static boolean InIsValid;
-    static RobotMain robot = new RobotMain();
+    static RobotTemplate robot = new RobotTemplate();
     static int i = 0;
             
             
@@ -30,7 +30,7 @@ public class RobotEmulator {
         //runs autonomous and autonomous periodic
         if (input == 1) {
             while (true) {
-                robot.autonomousContinuous();
+                //robot.autonomousContinuous();
                 i++;
                 if (i == 150) {
                     i = 0;
@@ -38,15 +38,15 @@ public class RobotEmulator {
                 } 
             }
             //runs teleop and teleop periodic
-                } else if (input == 2) {
-                    while (true) {
-                        robot.teleopContinuous();
-                        i++;
-                        if (i == 150) {
-                            i = 0;
-                            robot.teleopPeriodic();
-                        } 
-                    }
-                }
+        } else if (input == 2) {
+            while (true) {
+                //robot.teleopContinuous();
+                i++;
+                if (i == 150) {
+                    i = 0;
+                    robot.teleopPeriodic();
+                } 
+            }
+        }
     }
 }
