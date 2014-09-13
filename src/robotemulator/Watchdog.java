@@ -6,12 +6,22 @@ import java.util.concurrent.locks.ReentrantLock;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) FIRST 2008-2012. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
+/*
+ *  This file is part of frcjcss.
+ *
+ *  frcjcss is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  frcjcss is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with frcjcss.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 /**
  * Watchdog timer class.
@@ -24,7 +34,7 @@ import javax.swing.JOptionPane;
  *
  * http://thedailywtf.com/Articles/_0x2f__0x2f_TODO_0x3a__Uncomment_Later.aspx
  */
-public class Watchdog implements Runnable{
+public class Watchdog implements Runnable {
 
     private static Watchdog m_instance;
     
