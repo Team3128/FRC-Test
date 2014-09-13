@@ -1,8 +1,0 @@
-Put Robot Code into this package
-change imports to 
-
-import robotemulator.*;
-
-change package declarations to
-
-package RobotCode;

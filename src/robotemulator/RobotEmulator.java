@@ -1,52 +1,49 @@
 
 package robotemulator;
 
-import RobotCode.*;
-import java.util.Scanner;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import org.team3128.RobotTemplate;
 
 
 
-public class RobotEmulator {
-    static int input;
-    static boolean InIsValid;
-    static RobotMain robot = new RobotMain();
-    static int i = 0;
+public class RobotEmulator 
+{
+    static RobotTemplate robot = new RobotTemplate();
             
             
     public static void main(String[] args) {
         //asks which mode, teleop or autonomous
-        do {
-            System.out.println("(1) Autonomous \n(2) Teleop");
-            
-            Scanner scan = new Scanner(System.in);
-            input = scan.nextInt();
-            
-            if (input == 1 || input == 2) {
-                InIsValid = true;
-            }
-        } while (!InIsValid);
+        Object[] options = {"Autonomous", "Teleop"};
+        int n = JOptionPane.showOptionDialog(new JFrame(),
+                        "Run Autonomous or Teleop?",
+                        "Robot Emulator",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        options,
+                        options[0]);
         
         robot.robotInit();
+        Watchdog.getInstance();
         //runs autonomous and autonomous periodic
-        if (input == 1) {
-            while (true) {
-                robot.autonomousContinuous();
-                i++;
-                if (i == 150) {
-                    i = 0;
-                    robot.autonomousPeriodic();
-                } 
+        if(n == JOptionPane.YES_OPTION)
+        {
+        	robot.autonomousInit();
+            while (true)
+            {
+                robot.autonomousPeriodic(); 
             }
             //runs teleop and teleop periodic
-                } else if (input == 2) {
-                    while (true) {
-                        robot.teleopContinuous();
-                        i++;
-                        if (i == 150) {
-                            i = 0;
-                            robot.teleopPeriodic();
-                        } 
-                    }
-                }
+        } 
+        else if(n == JOptionPane.NO_OPTION)
+        {	
+        	robot.teleopInit();
+            while (true)
+            {    
+                robot.teleopPeriodic();
+            }
+        }
     }
 }

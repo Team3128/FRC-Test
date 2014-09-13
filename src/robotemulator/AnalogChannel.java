@@ -53,7 +53,12 @@ public class AnalogChannel {
     }
     
     class Grid extends JPanel implements MouseListener, MouseMotionListener {
-        Grid() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -8277537723570780412L;
+		
+		Grid() {
             addMouseListener(this);
             addMouseMotionListener(this);
             
@@ -81,6 +86,8 @@ public class AnalogChannel {
             g.drawOval(100, 100, 300, 300);
             
             drawBox(xpos, ypos, g);
+            
+            voltage = aangle;
         }
         
         public void drawBox(int x, int y, Graphics g) {
