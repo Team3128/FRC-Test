@@ -2,7 +2,6 @@ frc-java-emulator
 =================
 
 Simple Emulation package for FIRST Robotics Java code running on a cRio
-Add your robot code to the package RobotCode (be sure to change the package declaration).
 
 1. Add the frc-java-emulator jar to your build path
 
@@ -11,5 +10,3 @@ Add your robot code to the package RobotCode (be sure to change the package decl
 3. Change all your WPILib imports to robotemulator ones (either add "import robotemulator.*;" or do a find and replace for "edu.wpi.first.wpilibj" with "robotemulator")
 
 4. Run the code! The main class is "robotemulator.RobotEmulator".  It will search for all classes extending IterativeRobot and ask which one you want to run. 
-
-When you run the emulator it will give you a choice to run teleop or autonomous, input your choice and hit enter. 

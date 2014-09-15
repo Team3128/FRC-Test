@@ -27,16 +27,8 @@ import org.reflections.Reflections;
  */
 
 public class RobotEmulator 
-{
-	static String robotMainClassName = "you.forgot.to.set.the.robot.main.class.name";
-	
+{	
     static IterativeRobot robot;
-    
-	//CALL THIS VIA a static{} BLOCK
-    public static void setMainClassName(String newClassName)
-    {
-    	robotMainClassName = newClassName;
-    }
     
     @SuppressWarnings("unchecked")
 	public static void main(String[] args)
