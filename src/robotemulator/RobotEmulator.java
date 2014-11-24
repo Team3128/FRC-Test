@@ -34,7 +34,7 @@ public class RobotEmulator
 	public static void main(String[] args)
     {
     	//do this stuff in a different thread while the dialog is running because it takes like 3 seconds
-    	ArrayList<Class<? extends IterativeRobot>> mainClasses = new ArrayList<Class<? extends IterativeRobot>>();
+    	final ArrayList<Class<? extends IterativeRobot>> mainClasses = new ArrayList<Class<? extends IterativeRobot>>();
         Thread robotClassFinder = new Thread(new Runnable()
     	{
 			@Override
@@ -93,6 +93,12 @@ public class RobotEmulator
                             null,
                             classes,
                             classes[0]);
+        }
+        
+        if(mainClassIndex == 0)
+        {
+        	//user clicked the x button on the dialog
+        	return;
         }
         
         try
