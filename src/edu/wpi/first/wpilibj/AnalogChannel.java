@@ -1,12 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package robotemulator;
+package edu.wpi.first.wpilibj;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.BorderLayout;
@@ -15,6 +9,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import javax.swing.JFrame;
 
 /*
  *  This file is part of frcjcss.
@@ -33,29 +28,28 @@ import java.awt.event.MouseMotionListener;
  *  along with frcjcss.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 /**
  *
  * @author aubrey
  */
-public class Gyro {
-    double angle;
+public class AnalogChannel {
+    double voltage;
 
-
-     private final int JSHEIGHT = 500;//joy stick area height
+    private final int JSHEIGHT = 500;//joy stick area height
     private final int JSWIDTH = 500;//joy stick area width
 
-    private double x, y;
+    private double x, y;//-1 to 1
     private int xpos, ypos;
 
     private boolean mouseClicked = false;
-    private boolean trigger = false;
     
     private JFrame frame;
     private Grid grid;
     
     
-    public Gyro(int channel) {
-        frame = new JFrame("Gyro Emulator: " + channel);
+    public AnalogChannel(int channel) {
+        frame = new JFrame("Potentiometer Emulator: " + channel);
         
         frame.setLayout(new BorderLayout());
         frame.setPreferredSize(new Dimension(JSWIDTH, JSHEIGHT- 50));
@@ -70,18 +64,13 @@ public class Gyro {
     
     }
     
-    public double getAngle() {
-        double aangle = (-Math.atan2(ypos - 250, xpos-250))*(180/Math.PI);
-        angle = (aangle <= 0? aangle + 360: aangle);
-        return angle;
-    }
-    
-    public void reset() {
-        angle = 0;
-    }
-    
     class Grid extends JPanel implements MouseListener, MouseMotionListener {
-        Grid() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -8277537723570780412L;
+		
+		Grid() {
             addMouseListener(this);
             addMouseMotionListener(this);
             
@@ -95,26 +84,22 @@ public class Gyro {
             g.fillRect(0, 0, grid.getWidth(), grid.getHeight());
             g.setColor(Color.black);
             
-            //checks if trigger is set and draws a red filled rectangle if it is.
-            if (trigger) {
-                g.setColor(Color.red);
-                g.fillRect(xpos-20, ypos-20, 40, 40);
-                g.setColor(Color.black);
-            }
             
             //draws x and y axis and bottom border of grid.
             g.drawLine(0, JSHEIGHT/2, getWidth(), JSHEIGHT/2);
             g.drawLine(getWidth()/2, 0, getWidth()/2, JSHEIGHT);
             g.drawLine(0, JSHEIGHT, getWidth(), JSHEIGHT);
    
-            //drawing joystick and mouse positions
-            double aangle = (-Math.atan2(ypos - 250, xpos-250))*(180/Math.PI);
-            g.drawString("Angle: "+ (aangle <= 0? aangle + 360: aangle), 5, 20);
-            g.drawString("Angle is " + (mouseClicked?"":"not ") + "locked", 5, 60);
+            //drawing joystick and mouse positions           
+            double aangle = -((Math.atan2(ypos - 250, xpos-250)) * (180/Math.PI)*.06666666666666666666666);
+            g.drawString("Voltage: "+ aangle, 5, 20);
+            g.drawString("Voltage is " + (mouseClicked?"":"not ") + "locked", 5, 40);
             
             g.drawOval(100, 100, 300, 300);
             
             drawBox(xpos, ypos, g);
+            
+            voltage = aangle;
         }
         
         public void drawBox(int x, int y, Graphics g) {
@@ -135,8 +120,8 @@ public class Gyro {
                 ypos = JSHEIGHT;
             }
 
-            x = ((double)(xpos-JSHEIGHT/2.0)/(JSHEIGHT/2.0));
-            y = ((double)((getWidth()/2.0)-ypos)/(getWidth()/2.0));
+            x = (double)(xpos-JSHEIGHT/2.0)/(JSHEIGHT/2.0);
+            y = (double)((getWidth()/2.0)-ypos)/(getWidth()/2.0);
 
             repaint();
         }
@@ -157,20 +142,21 @@ public class Gyro {
             if (e.getButton() == 1)
                 mouseClicked = !mouseClicked;
             else if (e.getButton() == 3)
-                trigger = true;
+                
             repaint();
         }
         
-        public void mouseReleased(MouseEvent e) {
-            if (e.getButton() == 3) {
-                trigger = false;
-                repaint();
-            }
-        }
+
         
+        public void mouseReleased(MouseEvent e) {}
         public void mouseClicked(MouseEvent e) {}
         public void mouseEntered(MouseEvent e) {}
         public void mouseExited(MouseEvent e) {}
-        
+    } 
+    
+    
+    public double getVoltage() {
+       
+        return voltage;
     }
 }

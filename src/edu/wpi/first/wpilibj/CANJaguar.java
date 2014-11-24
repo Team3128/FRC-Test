@@ -1,4 +1,4 @@
-package robotemulator;
+package edu.wpi.first.wpilibj;
 
 /*
  *  This file is part of frcjcss.
@@ -16,6 +16,8 @@ package robotemulator;
  *  You should have received a copy of the GNU General Public License
  *  along with frcjcss.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+import gui.SpeedGrapher;
 
 import java.awt.Dimension;
 import java.awt.BorderLayout;

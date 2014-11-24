@@ -1,4 +1,4 @@
-package robotemulator;
+package edu.wpi.first.wpilibj;
 
 /*
  *  This file is part of frcjcss.
@@ -17,6 +17,8 @@ package robotemulator;
  *  along with frcjcss.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import gui.SpeedGrapher;
+
 import java.awt.Dimension;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -29,38 +31,38 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 /**
- * A Victor speed controller emulation for FRC.
+ * A Jaguar speed controller emulation for FRC.
  * @author Nick DiRienzo, Patrick Jameson
  * @version 11.12.2010.3
  */
-public class Victor implements ComponentListener, ActionListener {
+public class Jaguar implements ComponentListener, ActionListener {
 
     private double speed;
     private long startTime;
     private boolean isGraphRunning;
 
     private JFrame frame;
-    private JLabel victorNum;
-    private JLabel victorSpeed;
+    private JLabel jaguarNum;
+    private JLabel jaguarSpeed;
     private JButton startStop;
     
     private SpeedGrapher graph;
 
     /**
-     * Creates a new Victor speed controller.
+     * Creates a new Jaguar speed controller.
      * @param channel The Digital Sidecar channel it should be connected to.
      */
-    public Victor(int channel) {
-        frame = new JFrame("Victor Emulator: " + channel);
+    public Jaguar(int channel) {
+        frame = new JFrame("Jaguar Emulator: " + channel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //frame.setResizable(false);
         frame.setLocation(510, 0);
         frame.setLayout(new BorderLayout());
         frame.setPreferredSize(new Dimension(300, 320));
         
-        //tells the current speed of the victor in % above the graph.
-        victorSpeed = new JLabel("Current Speed: " + (speed*100) + "%");
-        frame.add(victorSpeed, BorderLayout.NORTH);
+        //tells the current speed of the jaguar in % above the graph.
+        jaguarSpeed = new JLabel("Current Speed: " + (speed*100) + "%");
+        frame.add(jaguarSpeed, BorderLayout.NORTH);
         
         //allows user to stop the movement of the graph. button located under the graph.
         startStop = new JButton("Stop Graph");
@@ -81,8 +83,8 @@ public class Victor implements ComponentListener, ActionListener {
     }
 
 	/**
-     * Sets the value of the Victor using a value between -1.0 and +1.0.
-     * @param speed The speed value of the Victor between -1.0 and +1.0.
+     * Sets the value of the Jaguar using a value between -1.0 and +1.0.
+     * @param speed The speed value of the Jaguar between -1.0 and +1.0.
      */
     public void set(double speed) {
     	if (System.currentTimeMillis() - startTime > 35 && isGraphRunning) {
@@ -90,14 +92,14 @@ public class Victor implements ComponentListener, ActionListener {
     		startTime = System.currentTimeMillis();
     	}
         this.speed = speed;
-        victorSpeed.setText((int)((speed*100)*10)/10.0 + "%");
+        jaguarSpeed.setText((int)((speed*100)*10)/10.0 + "%");
     }
 
     /**
-     * Gets the most recent value of the Victor.
-     * @return The most recent value of the Victor from -1.0 and +1.0.
+     * Gets the most recent value of the Jaguar.
+     * @return The most recent value of the Jaguar from -1.0 and +1.0.
      */
-    public double get() {
+    public double getSpeed() {
         return speed;
     }
     

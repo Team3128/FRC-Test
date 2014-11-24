@@ -1,12 +1,13 @@
-package robotemulator;
+package gui;
 
 import java.awt.BorderLayout;
-
 import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import edu.wpi.first.wpilibj.DigitalInput;
 
 /*
  *  This file is part of frcjcss.

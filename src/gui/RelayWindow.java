@@ -1,4 +1,4 @@
-package robotemulator;
+package gui;
 
 import java.awt.BorderLayout;
 import java.util.HashMap;
@@ -8,8 +8,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import robotemulator.Relay.Direction;
-import robotemulator.Relay.Value;
+import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Relay.Direction;
+import edu.wpi.first.wpilibj.Relay.Value;
 
 /*
  *  This file is part of frcjcss.

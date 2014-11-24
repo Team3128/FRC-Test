@@ -9,6 +9,9 @@ import javax.swing.JOptionPane;
 
 import org.reflections.Reflections;
 
+import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Watchdog;
+
 /*
  *  This file is part of frcjcss.
  *
@@ -94,13 +97,7 @@ public class RobotEmulator
                             classes,
                             classes[0]);
         }
-        
-        if(mainClassIndex == 0)
-        {
-        	//user clicked the x button on the dialog
-        	return;
-        }
-        
+       
         try
 		{
 			Class<? extends IterativeRobot> clazz = (Class<? extends IterativeRobot>) mainClasses.toArray()[mainClassIndex];
