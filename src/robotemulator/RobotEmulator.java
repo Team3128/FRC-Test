@@ -1,9 +1,11 @@
 
 package robotemulator;
 
+import java.awt.Image;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -33,9 +35,13 @@ public class RobotEmulator
 {	
     static IterativeRobot robot;
     
+    public static Image appIcon;
+    
     @SuppressWarnings("unchecked")
 	public static void main(String[] args)
     {
+    	appIcon = new ImageIcon(RobotEmulator.class.getClassLoader().getResource("images/icon.png")).getImage();
+    	
     	//do this stuff in a different thread while the dialog is running because it takes like 3 seconds
     	final ArrayList<Class<? extends IterativeRobot>> mainClasses = new ArrayList<Class<? extends IterativeRobot>>();
         Thread robotClassFinder = new Thread(new Runnable()
@@ -74,6 +80,7 @@ public class RobotEmulator
         if(mainClasses.isEmpty())
         {
         	System.out.println("Oops! There aren't any classes that extend IterativeRobot on the classpath!");
+        	return;
         }
         
         //figure out which class to use

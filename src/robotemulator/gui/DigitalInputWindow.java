@@ -1,4 +1,4 @@
-package gui;
+package robotemulator.gui;
 
 import java.awt.BorderLayout;
 import java.util.HashMap;
@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import robotemulator.RobotEmulator;
 import edu.wpi.first.wpilibj.DigitalInput;
 
 /*
@@ -58,6 +59,8 @@ public class DigitalInputWindow
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocation(800, 0);
         frame.setLayout(new BorderLayout());        
+        frame.setIconImage(RobotEmulator.appIcon);
+
         panel = new JPanel();
         frame.add(panel);
         

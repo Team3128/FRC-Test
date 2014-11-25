@@ -4,17 +4,19 @@
  */
 package edu.wpi.first.wpilibj;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import java.awt.Dimension;
-import java.awt.event.MouseEvent;
-import java.awt.BorderLayout;
-import java.awt.Graphics;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import robotemulator.RobotEmulator;
 
 /*
  *  This file is part of frcjcss.
@@ -61,6 +63,7 @@ public class Gyro {
         frame.setPreferredSize(new Dimension(JSWIDTH, JSHEIGHT- 50));
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setIconImage(RobotEmulator.appIcon);
 
         grid = new Grid();
         frame.add(grid, BorderLayout.CENTER);

@@ -17,10 +17,8 @@ package edu.wpi.first.wpilibj;
  *  along with frcjcss.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import gui.SpeedGrapher;
-
-import java.awt.Dimension;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
@@ -29,6 +27,9 @@ import java.awt.event.ComponentListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
+import robotemulator.RobotEmulator;
+import robotemulator.gui.SpeedGrapher;
 
 /**
  * A Talon speed controller emulation for FRC.
@@ -42,11 +43,10 @@ public class Talon implements ComponentListener, ActionListener {
     private boolean isGraphRunning;
 
     private JFrame frame;
-    private JLabel talonNum;
     private JLabel talonSpeed;
     private JButton startStop;
     
-    private SpeedGrapher graph;
+    private robotemulator.gui.SpeedGrapher graph;
 
     /**
      * Creates a new Talon speed controller.
@@ -54,6 +54,9 @@ public class Talon implements ComponentListener, ActionListener {
      */
     public Talon(int module, int channel) {
         frame = new JFrame("Talon Emulator: (" + module + ", " + channel +")");
+        
+        frame.setIconImage(RobotEmulator.appIcon);
+        
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //frame.setResizable(false);
         frame.setLocation(510, 0);

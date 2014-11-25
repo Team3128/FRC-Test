@@ -1,4 +1,4 @@
-package gui;
+package robotemulator.gui;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -33,9 +33,12 @@ import javax.swing.JPanel;
  * @author Patrick Jameson
  * @version 11.20.2010.0
  */
-@SuppressWarnings("serial")
 public class Graph extends JPanel implements MouseListener, MouseMotionListener, MouseWheelListener {
-	private int width, height, xAxisLoc, yAxisLoc, preX, preY, mouseX, mouseY;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6204156868436347448L;
+	private int width, height, xAxisLoc, yAxisLoc, preX, preY;
 	private int yStart, yEnd;
 	private int scale;
 	private double[][] points = {};
@@ -50,7 +53,7 @@ public class Graph extends JPanel implements MouseListener, MouseMotionListener,
 		
 		scale = 12;
 		restrictedRange = false;
-		
+				
 		
 		addMouseListener(this);
 		addMouseMotionListener(this);

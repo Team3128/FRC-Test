@@ -1,7 +1,5 @@
 package edu.wpi.first.wpilibj;
 
-import gui.DigitalInputWindow;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 /*
@@ -20,6 +18,8 @@ import java.awt.event.ActionListener;
  *  You should have received a copy of the GNU General Public License
  *  along with frcjcss.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+import robotemulator.gui.DigitalInputWindow;
 
 
 
@@ -41,7 +41,7 @@ public class DigitalInput implements ActionListener
         m_channel = channel;
         module = moduleNumber;
         state = false;
-        DigitalInputWindow.instance().addInput(this, moduleNumber, channel, state);
+        robotemulator.gui.DigitalInputWindow.instance().addInput(this, moduleNumber, channel, state);
     }
     
     /**

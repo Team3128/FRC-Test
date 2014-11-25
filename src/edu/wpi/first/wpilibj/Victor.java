@@ -17,10 +17,8 @@ package edu.wpi.first.wpilibj;
  *  along with frcjcss.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import gui.SpeedGrapher;
-
-import java.awt.Dimension;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
@@ -29,6 +27,9 @@ import java.awt.event.ComponentListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
+import robotemulator.RobotEmulator;
+import robotemulator.gui.SpeedGrapher;
 
 /**
  * A Victor speed controller emulation for FRC.
@@ -46,7 +47,7 @@ public class Victor implements ComponentListener, ActionListener {
     private JLabel victorSpeed;
     private JButton startStop;
     
-    private SpeedGrapher graph;
+    private robotemulator.gui.SpeedGrapher graph;
 
     /**
      * Creates a new Victor speed controller.
@@ -59,6 +60,8 @@ public class Victor implements ComponentListener, ActionListener {
         frame.setLocation(510, 0);
         frame.setLayout(new BorderLayout());
         frame.setPreferredSize(new Dimension(300, 320));
+        frame.setIconImage(RobotEmulator.appIcon);
+
         
         //tells the current speed of the victor in % above the graph.
         victorSpeed = new JLabel("Current Speed: " + (speed*100) + "%");

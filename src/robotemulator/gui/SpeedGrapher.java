@@ -1,4 +1,4 @@
-package gui;
+package robotemulator.gui;
 
 /*
  *  This file is part of frcjcss.

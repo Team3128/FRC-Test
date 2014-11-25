@@ -1,4 +1,4 @@
-package gui;
+package robotemulator.gui;
 
 import java.awt.BorderLayout;
 import java.util.HashMap;
@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import robotemulator.RobotEmulator;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Relay.Direction;
 import edu.wpi.first.wpilibj.Relay.Value;
@@ -68,6 +69,8 @@ public class RelayWindow
         frame.setLocation(800, 0);
         frame.setLayout(new BorderLayout());
         //frame.setPreferredSize(new Dimension(200, 50));
+        
+        frame.setIconImage(RobotEmulator.appIcon);
         
         panel = new JPanel();
         frame.add(panel);

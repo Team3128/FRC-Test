@@ -17,21 +17,23 @@ package edu.wpi.first.wpilibj;
  *  along with frcjcss.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import java.awt.Dimension;
-import java.awt.event.MouseEvent;
 import java.awt.BorderLayout;
-import java.awt.Graphics;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-import java.awt.event.KeyListener;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import robotemulator.RobotEmulator;
 
 /**
  * Joystick emulation for FRC.
@@ -75,6 +77,8 @@ public class Joystick implements KeyListener {
         frame.setPreferredSize(new Dimension(JSWIDTH, JSHEIGHT+100));
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setIconImage(RobotEmulator.appIcon);
+
 
         grid = new Grid();
         frame.add(grid, BorderLayout.CENTER);
