@@ -67,7 +67,7 @@ public class I2CDialog extends JDialog
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new GridLayout(0, 1, 0, 0));
 		{
-			JLabel lblNewLabel = new JLabel("A message was sent by the robot over I\u00B2C.");
+			JLabel lblNewLabel = new JLabel("A read command was sent by the robot over I\u00B2C.");
 			lblNewLabel.setToolTipText("I\u00B2C Message");
 		
 			lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -87,6 +87,7 @@ public class I2CDialog extends JDialog
 		{
 			StringBuilder dataPanelText = new StringBuilder("<html><b>Data:</b><br>");
 			StringBuilder binaryLineText = new StringBuilder("<b>Binary:</b> ");
+			StringBuilder hexLineText = new StringBuilder("<b>Hex:</b> ");
 			
 			//assuming little endian
 			for(int byteIndex = 0; byteIndex < sentDataLength; ++byteIndex)
@@ -94,7 +95,7 @@ public class I2CDialog extends JDialog
 				//padding code from http://stackoverflow.com/questions/1901085/convert-number-to-binary-string-with-full-padding
 				
 				String result = padding + Integer.toBinaryString(sentData[byteIndex]);
-				result = result.substring(result.length() - 8, result.length());  // take the right-most 64 digits
+				result = result.substring(result.length() - 8, result.length());  // take the right-most 8 digits
 				
 				binaryLineText.append(result);
 				binaryLineText.append(" ");
@@ -103,6 +104,19 @@ public class I2CDialog extends JDialog
 			binaryLineText.append("<br>");
 			dataPanelText.append(binaryLineText);
 			
+			//assuming little endian
+			for(int byteIndex = 0; byteIndex < sentDataLength; ++byteIndex)
+			{				
+				String result = String.format("%02x", sentData[byteIndex]);
+				
+				hexLineText.append(result);
+				hexLineText.append(" ");
+			}
+			
+			hexLineText.append("<br>");
+			dataPanelText.append(hexLineText);
+			
+			
 			long dataCombinedValue = 0;
 			//assuming little endian
 			for(int byteIndex = 0; byteIndex < sentDataLength; ++byteIndex)
@@ -110,11 +124,8 @@ public class I2CDialog extends JDialog
 				dataCombinedValue = (dataCombinedValue << 8) | sentData[byteIndex];
 			}
 			
-			dataPanelText.append("<b>Hex:</b> ");
-			dataPanelText.append(Long.toString(dataCombinedValue, 16));
-			dataPanelText.append("<br>");
 			
-			dataPanelText.append("<b>Decimal:</b> ");
+			dataPanelText.append("<b>Decimal (combined):</b> ");
 			dataPanelText.append(Long.toString(dataCombinedValue));
 			dataPanelText.append("</html>");
 			
