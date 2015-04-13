@@ -26,22 +26,19 @@ import robotemulator.gui.DigitalInputWindow;
 public class DigitalInput implements ActionListener
 {
 	
-	int module;
 	boolean state;
 	int m_channel;
 	
 	/**
      * Create an instance of a Digital Input class.
      * Creates a digital input given an channel and module.
-     * @param moduleNumber The number of the digital module to use for this input 
      * @param channel the port for the digital input
      */
-    public DigitalInput(int moduleNumber, int channel)
+    public DigitalInput(int channel)
     {
         m_channel = channel;
-        module = moduleNumber;
         state = false;
-        robotemulator.gui.DigitalInputWindow.instance().addInput(this, moduleNumber, channel, state);
+        robotemulator.gui.DigitalInputWindow.instance().addInput(this, channel, state);
     }
     
     /**
@@ -61,6 +58,6 @@ public class DigitalInput implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
 		state = !state;
-		DigitalInputWindow.instance().updateInput(module, m_channel, state);
+		DigitalInputWindow.instance().updateInput(m_channel, state);
 	}
 }
