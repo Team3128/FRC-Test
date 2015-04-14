@@ -71,45 +71,33 @@ public class DigitalInputWindow
 	}
 	
 	/**
-	 * Get the unique ID of an input from its module and channel
-	 * @param module
-	 * @param channel
-	 * @return
-	 */
-	private int hashInput(int module, int channel)
-	{
-		return module * (channel + 10);
-	}
-	
-	/**
-	 * Adds a relay to the relays window by module and channel number.
+	 * Adds an input to the inputs window by and channel number.
 	 * @param module
 	 * @param channel
 	 */
-	public void addInput(DigitalInput input, int module, int channel, boolean value)
+	public void addInput(DigitalInput input, int channel, boolean value)
 	{
-		int hash = hashInput(module, channel);
-		inputHashToGUIIndexMap.put(hash, nextFreeGuiIndex);
-		JButton button = new JButton(formatInputName(module, channel, value));
+		inputHashToGUIIndexMap.put(channel, nextFreeGuiIndex);
+		JButton button = new JButton(formatInputName(channel, value));
 		button.addActionListener(input);
 		panel.add(button, nextFreeGuiIndex++);
 		frame.pack();		
 	}
 
-	public void updateInput(int module, int channel, boolean value)
+	public void updateInput(int channel, boolean value)
 	{
-		int inputIndex = inputHashToGUIIndexMap.get(hashInput(module, channel));
+		int inputIndex = inputHashToGUIIndexMap.get(channel);
 		
 		synchronized(panel.getTreeLock())
 		{
-			((JButton)panel.getComponent(inputIndex)).setText(formatInputName(module, channel, value));
+			((JButton)panel.getComponent(inputIndex)).setText(formatInputName(channel, value));
 			
 		}
 	}
 	
-	private String formatInputName(int module, int channel, boolean isOn)
+	private String formatInputName(int channel, boolean isOn)
 	{
-		return String.format("Input (%d, %d): currently %s", module, channel, isOn ? "on" : "off");
+		return String.format("Input %d: currently %s", channel, isOn ? "on" : "off");
 	}
 	
 }

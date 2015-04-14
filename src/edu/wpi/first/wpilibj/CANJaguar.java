@@ -36,13 +36,13 @@ import robotemulator.gui.SpeedGrapher;
  * @author Nick DiRienzo, Patrick Jameson
  * @version 11.12.2010.3
  */
-public class CANJaguar implements ComponentListener, ActionListener {
+public class CANJaguar implements ComponentListener, ActionListener, SpeedController {
     
     public static final int kControllerRate = 1000;
     public static final double kApproxBusVoltage = 12.0;
     
     
-    private double X;
+    private double speed;
    
     private long startTime; 
     private boolean isGraphRunning;
@@ -162,11 +162,13 @@ public class CANJaguar implements ComponentListener, ActionListener {
 
 
     /**
-     * Creates a new Jaguar speed controller.
-     * @param channel The Digital Sidecar channel it should be connected to.
+	 * Constructor for the CANJaguar device.<br>
+	 * By default the device is configured in Percent mode.
+	 * 
+	 * @param deviceNumber The address of the Jaguar on the CAN bus.
      */
     public CANJaguar(int deviceNumber) {
-        frame = new JFrame("CANJaguar Emulator: " + deviceNumber);
+        frame = new JFrame("CANJaguar Emulator: CAN Address" + deviceNumber);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //frame.setResizable(false);
         frame.setLocation(510, 0);
@@ -176,7 +178,7 @@ public class CANJaguar implements ComponentListener, ActionListener {
 
         
         //tells the current speed of the jaguar in % above the graph.
-        jaguarSpeed = new JLabel("Current Speed: " + (X*100) + "%");
+        jaguarSpeed = new JLabel("Current Speed: " + (speed*100) + "%");
         frame.add(jaguarSpeed, BorderLayout.NORTH);
         
         //allows user to stop the movement of the graph. button located under the graph.
@@ -201,12 +203,12 @@ public class CANJaguar implements ComponentListener, ActionListener {
      * Sets the value of the Jaguar using a value between -1.0 and +1.0.
      * @param speed The speed value of the Jaguar between -1.0 and +1.0.
      */
-    public void setX(double speed) {
+    public void set(double speed) {
     	if (System.currentTimeMillis() - startTime > 35 && isGraphRunning) {
     		graph.appendSpeed(speed);
     		startTime = System.currentTimeMillis();
     	}
-        this.X = speed;
+        this.speed = speed;
         jaguarSpeed.setText((int)((speed*100)*10)/10.0 + "%");
     }
 
@@ -214,8 +216,8 @@ public class CANJaguar implements ComponentListener, ActionListener {
      * Gets the most recent value of the Jaguar.
      * @return The most recent value of the Jaguar from -1.0 and +1.0.
      */
-    public double getX() {
-        return X;
+    public double get() {
+        return speed;
     }
     
     //add pidWrite method?
@@ -230,6 +232,25 @@ public class CANJaguar implements ComponentListener, ActionListener {
 			startStop.setText((isGraphRunning ? "Start" : "Stop") + " Graph");
 			isGraphRunning = !isGraphRunning;
 		}
+	}
+	
+	@Override
+	public void pidWrite(double output)
+	{
+		//TODO make sure this is right
+		set(speed + output);
+	}
+
+	@Override
+	public void set(double speed, byte syncGroup)
+	{
+		set(speed);
+	}
+
+	@Override
+	public void disable()
+	{
+		//TODO implement this
 	}
 	
 	//extra stuffs

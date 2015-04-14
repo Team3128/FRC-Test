@@ -10,8 +10,7 @@ package edu.wpi.first.wpilibj;
 /**
  * Interface for speed controlling devices.
  */
-public interface SpeedController
-{
+public interface SpeedController extends PIDOutput {
 
     /**
      * Common interface for getting the current set speed of a speed controller.

@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
 import org.reflections.Reflections;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Watchdog;
 
 /*
  *  This file is part of frcjcss.
@@ -131,7 +130,6 @@ public class RobotEmulator
         }));
         
         robot.robotInit();
-        Watchdog.getInstance();
         //runs autonomous and autonomous periodic
         if(n == JOptionPane.YES_OPTION)
         {

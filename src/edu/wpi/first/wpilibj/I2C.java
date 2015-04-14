@@ -6,7 +6,18 @@ import edu.wpi.first.wpilibj.util.BoundaryException;
 
 public class I2C
 {
-	
+	public enum Port {kOnboard(0), kMXP(1);
+	private int value;
+
+	private Port(int value){
+		this.value = value;
+	}
+
+	public int getValue(){
+		return this.value;
+	}
+};
+
 	private byte m_deviceAddress;
 
 	 /**
@@ -15,8 +26,9 @@ public class I2C
 	* @param deviceAddress The address of the device on the I2C bus.
 	* Bits 7-4 are the device type, 3-1 are the device address, and 0 signifies read or write.
 	*/
-	public I2C(byte deviceAddress)
+	public I2C(Port port, byte deviceAddress)
 	{
+		//TODO add port parameter to window display
 		m_deviceAddress = deviceAddress;
 	}
 	

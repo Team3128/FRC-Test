@@ -36,7 +36,7 @@ import robotemulator.RobotEmulator;
  *
  * @author aubrey
  */
-public class AnalogChannel {
+public class AnalogInput {
     double voltage;
 
     private final int JSHEIGHT = 500;//joy stick area height
@@ -51,7 +51,7 @@ public class AnalogChannel {
     private Grid grid;
     
     
-    public AnalogChannel(int channel) {
+    public AnalogInput(int channel) {
         frame = new JFrame("Potentiometer Emulator: " + channel);
         
         frame.setLayout(new BorderLayout());
