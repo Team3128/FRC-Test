@@ -1,4 +1,4 @@
-package edu.wpi.first.wpilibj;
+package robotemulator;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -11,7 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import robotemulator.RobotEmulator;
+import edu.wpi.first.wpilibj.SpeedController;
 import robotemulator.gui.SpeedGrapher;
 
 /**
