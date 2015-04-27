@@ -1,4 +1,4 @@
-package robotemulator.gui;
+package frctest.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dialog;
@@ -21,7 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import robotemulator.RobotEmulator;
+import frctest.EmulatorMain;
 
 public class I2CDialog extends JDialog
 {
@@ -57,7 +57,7 @@ public class I2CDialog extends JDialog
 	 */
 	public I2CDialog(int deviceAddressCombined, byte[] sentData, int sentDataLength)
 	{
-        setIconImage(RobotEmulator.appIcon);
+        setIconImage(EmulatorMain.appIcon);
 
 		setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 		setTitle("Emulator: I\u00B2C Message");

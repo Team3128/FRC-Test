@@ -19,15 +19,15 @@ import java.awt.event.ActionListener;
  *  along with frcjcss.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import robotemulator.gui.DigitalInputWindow;
+import frctest.gui.DigitalInputWindow;
 
 
 
 public class DigitalInput implements ActionListener
 {
 	
-	boolean state;
-	int m_channel;
+	public boolean state;
+	public int channel;
 	
 	/**
      * Create an instance of a Digital Input class.
@@ -36,9 +36,9 @@ public class DigitalInput implements ActionListener
      */
     public DigitalInput(int channel)
     {
-        m_channel = channel;
+        this.channel = channel;
         state = false;
-        robotemulator.gui.DigitalInputWindow.instance().addInput(this, channel, state);
+        frctest.gui.DigitalInputWindow.instance().addInput(this, channel, state);
     }
     
     /**
@@ -58,6 +58,6 @@ public class DigitalInput implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
 		state = !state;
-		DigitalInputWindow.instance().updateInput(m_channel, state);
+		DigitalInputWindow.instance().updateInput(channel, state);
 	}
 }

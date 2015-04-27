@@ -1,4 +1,4 @@
-package robotemulator;
+package frctest;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import edu.wpi.first.wpilibj.SpeedController;
-import robotemulator.gui.SpeedGrapher;
+import frctest.gui.SpeedGrapher;
 
 /**
  * Class to emulate the three non-CAN motor controllers.
@@ -41,7 +41,7 @@ public class EmulatedMotorController implements ComponentListener, ActionListene
     {
         frame = new JFrame(name + " Emulator: channel "  + channel);
         
-        frame.setIconImage(RobotEmulator.appIcon);
+        frame.setIconImage(EmulatorMain.appIcon);
         
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //frame.setResizable(false);

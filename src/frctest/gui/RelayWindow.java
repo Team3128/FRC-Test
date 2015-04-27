@@ -1,4 +1,4 @@
-package robotemulator.gui;
+package frctest.gui;
 
 import java.awt.BorderLayout;
 import java.util.HashMap;
@@ -8,10 +8,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import robotemulator.RobotEmulator;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Relay.Direction;
 import edu.wpi.first.wpilibj.Relay.Value;
+import frctest.EmulatorMain;
 
 /*
  *  This file is part of frcjcss.
@@ -70,7 +70,7 @@ public class RelayWindow
         frame.setLayout(new BorderLayout());
         //frame.setPreferredSize(new Dimension(200, 50));
         
-        frame.setIconImage(RobotEmulator.appIcon);
+        frame.setIconImage(EmulatorMain.appIcon);
         
         panel = new JPanel();
         frame.add(panel);

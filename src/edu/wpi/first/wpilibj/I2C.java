@@ -1,8 +1,8 @@
 package edu.wpi.first.wpilibj;
 
-import robotemulator.gui.I2CDialog;
-import robotemulator.gui.I2CMonitorWindow;
 import edu.wpi.first.wpilibj.util.BoundaryException;
+import frctest.gui.I2CDialog;
+import frctest.gui.I2CMonitorWindow;
 
 public class I2C
 {
@@ -66,7 +66,7 @@ public class I2C
         	else
         	{
         		//the message is not in the cache, we'll need to ask the user
-		        robotemulator.gui.I2CDialog dialog = new I2CDialog(m_deviceAddress, dataToSend, sendSize);
+		        frctest.gui.I2CDialog dialog = new I2CDialog(m_deviceAddress, dataToSend, sendSize);
 		        
 		        //should block until dialog is closed
 		        dialog.setVisible(true);

@@ -1,5 +1,5 @@
 
-package robotemulator;
+package frctest;
 
 import java.awt.Image;
 import java.lang.reflect.Constructor;
@@ -30,7 +30,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
  *  along with frcjcss.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class RobotEmulator 
+public class EmulatorMain 
 {	
     static IterativeRobot robot;
     
@@ -39,7 +39,7 @@ public class RobotEmulator
     @SuppressWarnings("unchecked")
 	public static void main(String[] args)
     {
-    	appIcon = new ImageIcon(RobotEmulator.class.getClassLoader().getResource("images/icon.png")).getImage();
+    	appIcon = new ImageIcon(EmulatorMain.class.getClassLoader().getResource("images/icon.png")).getImage();
     	
     	//do this stuff in a different thread while the dialog is running because it takes like 3 seconds
     	final ArrayList<Class<? extends IterativeRobot>> mainClasses = new ArrayList<Class<? extends IterativeRobot>>();

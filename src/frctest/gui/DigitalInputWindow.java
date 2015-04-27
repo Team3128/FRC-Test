@@ -1,4 +1,4 @@
-package robotemulator.gui;
+package frctest.gui;
 
 import java.awt.BorderLayout;
 import java.util.HashMap;
@@ -7,8 +7,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import robotemulator.RobotEmulator;
 import edu.wpi.first.wpilibj.DigitalInput;
+import frctest.EmulatorMain;
 
 /*
  *  This file is part of frcjcss.
@@ -59,7 +59,7 @@ public class DigitalInputWindow
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocation(800, 0);
         frame.setLayout(new BorderLayout());        
-        frame.setIconImage(RobotEmulator.appIcon);
+        frame.setIconImage(EmulatorMain.appIcon);
 
         panel = new JPanel();
         frame.add(panel);

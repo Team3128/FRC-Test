@@ -1,6 +1,6 @@
 package edu.wpi.first.wpilibj;
 
-import robotemulator.gui.RelayWindow;
+import frctest.gui.RelayWindow;
 
 /*
  *  This file is part of frcjcss.
@@ -192,7 +192,7 @@ public class Relay
     {	
     	m_value = value;
 
-        robotemulator.gui.RelayWindow.instance().updateRelay(m_module, m_channel, value, m_direction);
+        frctest.gui.RelayWindow.instance().updateRelay(m_module, m_channel, value, m_direction);
     }
     
     /**

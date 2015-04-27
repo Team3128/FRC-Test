@@ -1,4 +1,4 @@
-package robotemulator.gui;
+package frctest.gui;
 
 import java.awt.GridLayout;
 import java.util.HashMap;
@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import robotemulator.RobotEmulator;
+import frctest.EmulatorMain;
 
 public class I2CMonitorWindow extends JFrame
 {
@@ -46,7 +46,7 @@ public class I2CMonitorWindow extends JFrame
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new GridLayout(0, 1, 0, 0));
-        setIconImage(RobotEmulator.appIcon);
+        setIconImage(EmulatorMain.appIcon);
         
         setVisible(true);
 

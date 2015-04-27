@@ -1,6 +1,6 @@
 package edu.wpi.first.wpilibj;
 
-import robotemulator.EmulatedMotorController;
+import frctest.EmulatedMotorController;
 
 /*
  *  This file is part of frcjcss.

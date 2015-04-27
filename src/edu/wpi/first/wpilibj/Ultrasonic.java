@@ -138,7 +138,7 @@ public class Ultrasonic extends SensorBase implements PIDSource, LiveWindowSenda
 		m_allocatedChannels = false;
 		
 		pingOutputChannel = pingChannel.m_channel;
-		echoInputChannel = echoChannel.m_channel;
+		echoInputChannel = echoChannel.channel;
 
 		m_units = units;
 		initialize();

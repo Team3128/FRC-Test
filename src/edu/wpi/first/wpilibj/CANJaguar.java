@@ -28,8 +28,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import robotemulator.RobotEmulator;
-import robotemulator.gui.SpeedGrapher;
+import frctest.EmulatorMain;
+import frctest.gui.SpeedGrapher;
 
 /**
  * A Jaguar speed controller emulation for FRC.
@@ -50,7 +50,7 @@ public class CANJaguar implements ComponentListener, ActionListener, SpeedContro
     private JLabel jaguarSpeed;
     private JButton startStop;
     
-    private robotemulator.gui.SpeedGrapher graph;
+    private frctest.gui.SpeedGrapher graph;
 
     public static class ControlMode {
         public final int value;
@@ -174,7 +174,7 @@ public class CANJaguar implements ComponentListener, ActionListener, SpeedContro
         frame.setLocation(510, 0);
         frame.setLayout(new BorderLayout());
         frame.setPreferredSize(new Dimension(300, 320));
-        frame.setIconImage(RobotEmulator.appIcon);
+        frame.setIconImage(EmulatorMain.appIcon);
 
         
         //tells the current speed of the jaguar in % above the graph.

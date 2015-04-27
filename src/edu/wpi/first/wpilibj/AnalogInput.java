@@ -12,7 +12,7 @@ import java.awt.event.MouseMotionListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import robotemulator.RobotEmulator;
+import frctest.EmulatorMain;
 
 /*
  *  This file is part of frcjcss.
@@ -58,7 +58,7 @@ public class AnalogInput {
         frame.setPreferredSize(new Dimension(JSWIDTH, JSHEIGHT- 50));
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setIconImage(RobotEmulator.appIcon);
+        frame.setIconImage(EmulatorMain.appIcon);
 
 
         grid = new Grid();
