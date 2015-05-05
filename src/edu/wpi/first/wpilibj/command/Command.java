@@ -308,7 +308,7 @@ public abstract class Command implements NamedSendable {
      */
     synchronized Iterator<Subsystem> getRequirements()
     {
-        return m_requirements == null ? Collections.emptyIterator() : m_requirements.iterator();
+        return m_requirements == null ? Collections.<Subsystem>emptyIterator() : m_requirements.iterator();
     }
 
     /**
