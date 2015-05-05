@@ -45,8 +45,9 @@ public class EmulatorMain
     @SuppressWarnings("unchecked")
 	public static void main(String[] args)
     {
+
     	enableGUI = true;
-    	appIcon = new ImageIcon(EmulatorMain.class.getClassLoader().getResource("images/icon.png")).getImage();
+    	appIcon = new ImageIcon(EmulatorMain.class.getClassLoader().getResource("images/Icon_attempt3.png.png")).getImage();
     	
     	//do this stuff in a different thread while the dialog is running because it takes like 3 seconds
     	final ArrayList<Class<? extends IterativeRobot>> mainClasses = new ArrayList<Class<? extends IterativeRobot>>();
