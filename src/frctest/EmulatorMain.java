@@ -34,11 +34,18 @@ public class EmulatorMain
 {	
     static IterativeRobot robot;
     
+    //if we are running in test mode, we want to be able to instantiate objects without
+    //popping up GUI windows everywhere.  This boolean acts as a master switch for these
+    //windows.  It is turned on by main(), which enables the GUI.  main() is not called by junit, so
+    //in test mode it stays initialized to false.
+    public static boolean enableGUI = false;
+    
     public static Image appIcon;
     
     @SuppressWarnings("unchecked")
 	public static void main(String[] args)
     {
+    	enableGUI = true;
     	appIcon = new ImageIcon(EmulatorMain.class.getClassLoader().getResource("images/icon.png")).getImage();
     	
     	//do this stuff in a different thread while the dialog is running because it takes like 3 seconds

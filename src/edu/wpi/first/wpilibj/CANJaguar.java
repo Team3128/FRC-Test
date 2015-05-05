@@ -167,36 +167,40 @@ public class CANJaguar implements ComponentListener, ActionListener, SpeedContro
 	 * 
 	 * @param deviceNumber The address of the Jaguar on the CAN bus.
      */
-    public CANJaguar(int deviceNumber) {
-        frame = new JFrame("CANJaguar Emulator: CAN Address" + deviceNumber);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //frame.setResizable(false);
-        frame.setLocation(510, 0);
-        frame.setLayout(new BorderLayout());
-        frame.setPreferredSize(new Dimension(300, 320));
-        frame.setIconImage(EmulatorMain.appIcon);
-
-        
-        //tells the current speed of the jaguar in % above the graph.
-        jaguarSpeed = new JLabel("Current Speed: " + (speed*100) + "%");
-        frame.add(jaguarSpeed, BorderLayout.NORTH);
-        
-        //allows user to stop the movement of the graph. button located under the graph.
-        startStop = new JButton("Stop Graph");
-        startStop.addActionListener(this);
-        frame.add(startStop, BorderLayout.SOUTH);
-        
-        //makes the actual graph.
-        graph = new SpeedGrapher(300, 300);
-        frame.add(graph, BorderLayout.CENTER);
-        
-        startTime = 0;
-        isGraphRunning = true;
-        
-        frame.addComponentListener(this);
-
-        frame.pack();
-        frame.setVisible(true);
+    public CANJaguar(int deviceNumber)
+    {
+        if(EmulatorMain.enableGUI)
+        {
+	        frame = new JFrame("CANJaguar Emulator: CAN Address" + deviceNumber);
+	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	        //frame.setResizable(false);
+	        frame.setLocation(510, 0);
+	        frame.setLayout(new BorderLayout());
+	        frame.setPreferredSize(new Dimension(300, 320));
+	        frame.setIconImage(EmulatorMain.appIcon);
+	
+	        
+	        //tells the current speed of the jaguar in % above the graph.
+	        jaguarSpeed = new JLabel("Current Speed: " + (speed*100) + "%");
+	        frame.add(jaguarSpeed, BorderLayout.NORTH);
+	        
+	        //allows user to stop the movement of the graph. button located under the graph.
+	        startStop = new JButton("Stop Graph");
+	        startStop.addActionListener(this);
+	        frame.add(startStop, BorderLayout.SOUTH);
+	        
+	        //makes the actual graph.
+	        graph = new SpeedGrapher(300, 300);
+	        frame.add(graph, BorderLayout.CENTER);
+	        
+	        startTime = 0;
+	        isGraphRunning = true;
+	        
+	        frame.addComponentListener(this);
+	
+	        frame.pack();
+	        frame.setVisible(true);
+        }
     }
 
 	/**

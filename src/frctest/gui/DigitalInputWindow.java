@@ -55,19 +55,21 @@ public class DigitalInputWindow
 	
 	private DigitalInputWindow()
 	{
-		frame = new JFrame("Digital Inputs");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocation(800, 0);
-        frame.setLayout(new BorderLayout());        
-        frame.setIconImage(EmulatorMain.appIcon);
-
-        panel = new JPanel();
-        frame.add(panel);
-        
-        inputHashToGUIIndexMap = new HashMap<Integer, Integer>();
-        frame.setVisible(true);
-        frame.toFront();
-
+        if(EmulatorMain.enableGUI)
+        {
+			frame = new JFrame("Digital Inputs");
+	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	        frame.setLocation(800, 0);
+	        frame.setLayout(new BorderLayout());        
+	        frame.setIconImage(EmulatorMain.appIcon);
+	
+	        panel = new JPanel();
+	        frame.add(panel);
+	        
+	        inputHashToGUIIndexMap = new HashMap<Integer, Integer>();
+	        frame.setVisible(true);
+	        frame.toFront();
+        }
 	}
 	
 	/**

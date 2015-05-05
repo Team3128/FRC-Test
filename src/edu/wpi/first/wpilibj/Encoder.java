@@ -18,7 +18,19 @@ import edu.wpi.first.wpilibj.util.BoundaryException;
  * All encoders will immediately start counting - reset() them if you need them
  * to be zeroed before use.
  */
-public class Encoder extends SensorBase implements CounterBase, PIDSource, LiveWindowSendable {
+public class Encoder extends SensorBase implements CounterBase, PIDSource, LiveWindowSendable 
+{
+	
+	/**
+	 * Number of pulses that the encoder has received, used to calculate the other distance-related functions. 
+	 */
+	public int rawCount;
+	
+	/**
+	 * The last time between encoder pulses.  The lower it is, the faster the encoder is spinning.
+	 */
+	public double lastPeriodTime;
+	
 	public enum IndexingType {
 		kResetWhileHigh, kResetWhileLow, kResetOnFallingEdge, kResetOnRisingEdge
 	}
@@ -201,8 +213,7 @@ public class Encoder extends SensorBase implements CounterBase, PIDSource, LiveW
 	 */
 	public int getRaw() 
 	{
-		//TODO implement this
-		return 0;
+		return rawCount;
 	}
 
 	/**
@@ -320,6 +331,17 @@ public class Encoder extends SensorBase implements CounterBase, PIDSource, LiveW
 	public double getRate() {
 		return m_distancePerPulse / getPeriod();
 	}
+	
+	/**
+	 * Added by the emulator.
+	 * 
+	 * Sets the current rate of the encoder. Units are distance per second as
+	 * scaled by the value from setDistancePerPulse().
+	 */
+	public void setRate(double rate)
+	{
+		lastPeriodTime = m_distancePerPulse / rate;
+	}
 
 	/**
 	 * Set the minimum rate of the device before the hardware reports it
@@ -358,7 +380,8 @@ public class Encoder extends SensorBase implements CounterBase, PIDSource, LiveW
 	 * @param reverseDirection
 	 *            true if the encoder direction should be reversed
 	 */
-	public void setReverseDirection(boolean reverseDirection) {
+	public void setReverseDirection(boolean reverseDirection)
+	{
 		//TODO implement this
 	}
 

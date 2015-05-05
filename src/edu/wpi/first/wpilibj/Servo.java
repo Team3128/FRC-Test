@@ -17,11 +17,13 @@ package edu.wpi.first.wpilibj;
  *  along with frcjcss.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import java.awt.Dimension;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
+import frctest.EmulatorMain;
 
 /**
  * FRC Servo simulation.
@@ -44,6 +46,7 @@ public class Servo {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setPreferredSize(new Dimension(300, 100));
 		frame.setLayout(new BorderLayout());
+        frame.setIconImage(EmulatorMain.appIcon);
 		
 		posLabel = new JLabel("Position: " + position);
 		frame.add(posLabel, BorderLayout.NORTH);

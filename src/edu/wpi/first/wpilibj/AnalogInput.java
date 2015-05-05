@@ -37,12 +37,11 @@ import frctest.EmulatorMain;
  * @author aubrey
  */
 public class AnalogInput {
-    double voltage;
+    public double voltage;
 
     private final int JSHEIGHT = 500;//joy stick area height
     private final int JSWIDTH = 500;//joy stick area width
 
-    private double x, y;//-1 to 1
     private int xpos, ypos;
 
     private boolean mouseClicked = false;
@@ -51,22 +50,25 @@ public class AnalogInput {
     private Grid grid;
     
     
-    public AnalogInput(int channel) {
-        frame = new JFrame("Potentiometer Emulator: " + channel);
-        
-        frame.setLayout(new BorderLayout());
-        frame.setPreferredSize(new Dimension(JSWIDTH, JSHEIGHT- 50));
-        frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setIconImage(EmulatorMain.appIcon);
-
-
-        grid = new Grid();
-        frame.add(grid, BorderLayout.CENTER);
-        
-        frame.pack();
-        frame.setVisible(true);        
-    
+    public AnalogInput(int channel)
+    {
+        if(EmulatorMain.enableGUI)
+        {
+	        frame = new JFrame("Potentiometer Emulator: " + channel);
+	        
+	        frame.setLayout(new BorderLayout());
+	        frame.setPreferredSize(new Dimension(JSWIDTH, JSHEIGHT- 50));
+	        frame.setResizable(false);
+	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	        frame.setIconImage(EmulatorMain.appIcon);
+	
+	
+	        grid = new Grid();
+	        frame.add(grid, BorderLayout.CENTER);
+	        
+	        frame.pack();
+	        frame.setVisible(true);        
+        }    
     }
     
     class Grid extends JPanel implements MouseListener, MouseMotionListener {
@@ -125,8 +127,9 @@ public class AnalogInput {
                 ypos = JSHEIGHT;
             }
 
-            x = (double)(xpos-JSHEIGHT/2.0)/(JSHEIGHT/2.0);
-            y = (double)((getWidth()/2.0)-ypos)/(getWidth()/2.0);
+            //not sure what these were meant to be used for -JS
+            //x = (double)(xpos-JSHEIGHT/2.0)/(JSHEIGHT/2.0);
+            //y = (double)((getWidth()/2.0)-ypos)/(getWidth()/2.0);
 
             repaint();
         }

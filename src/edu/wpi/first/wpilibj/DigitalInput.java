@@ -19,6 +19,7 @@ import java.awt.event.ActionListener;
  *  along with frcjcss.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import frctest.EmulatorMain;
 import frctest.gui.DigitalInputWindow;
 
 
@@ -38,7 +39,11 @@ public class DigitalInput implements ActionListener
     {
         this.channel = channel;
         state = false;
-        frctest.gui.DigitalInputWindow.instance().addInput(this, channel, state);
+        
+        if(EmulatorMain.enableGUI)
+        {
+        	frctest.gui.DigitalInputWindow.instance().addInput(this, channel, state);
+        }
     }
     
     /**
