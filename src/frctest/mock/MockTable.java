@@ -17,6 +17,11 @@ public class MockTable implements ITable
 {
 	
 	public HashMap<String, Object> table;
+	
+	public MockTable()
+	{
+		table = new HashMap<String, Object>();
+	}
 
 	@Override
 	public boolean containsKey(String key)
@@ -27,12 +32,17 @@ public class MockTable implements ITable
 	@Override
 	public boolean containsSubTable(String key)
 	{
-		return table.get(key) instanceof ITable;
+		Object subtable = table.get(key);
+		return subtable != null && subtable instanceof ITable;
 	}
 
 	@Override
 	public ITable getSubTable(String key)
 	{
+		if(!containsSubTable(key))
+		{
+			table.put(key, new MockTable());
+		}
 		Object subTableObject = table.get(key);
 		if(subTableObject != null && subTableObject instanceof ITable)
 		{

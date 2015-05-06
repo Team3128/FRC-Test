@@ -1,6 +1,6 @@
 package edu.wpi.first.wpilibj.tables;
 
-import java.util.NoSuchElementException;
+import edu.wpi.first.wpilibj.networktables.NetworkTableKeyNotDefined;
 
 
 /**
@@ -24,6 +24,7 @@ public interface ITable {
 	public boolean containsSubTable(String key);
 	
     /**
+     * Gets a subtable, or creates it if it does not exist.
      * @param key the name of the table relative to this one
      * @return a sub table relative to this one
      */
