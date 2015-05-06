@@ -36,8 +36,8 @@ public class EmulatorMain
     
     //if we are running in test mode, we want to be able to instantiate objects without
     //popping up GUI windows everywhere.  This boolean acts as a master switch for these
-    //windows.  It is turned on by main(), which enables the GUI.  main() is not called by junit, so
-    //in test mode it stays initialized to false.
+    //windows.  In emulation mode, it is turned on by main(), which enables the GUI.  
+    //main() is not called by junit, so in test mode it stays initialized to false.
     public static boolean enableGUI = false;
     
     public static Image appIcon;
@@ -47,7 +47,7 @@ public class EmulatorMain
     {
 
     	enableGUI = true;
-    	appIcon = new ImageIcon(EmulatorMain.class.getClassLoader().getResource("images/Icon_attempt3.png.png")).getImage();
+    	appIcon = new ImageIcon(EmulatorMain.class.getClassLoader().getResource("images/Icon_attempt3.png")).getImage();
     	
     	//do this stuff in a different thread while the dialog is running because it takes like 3 seconds
     	final ArrayList<Class<? extends IterativeRobot>> mainClasses = new ArrayList<Class<? extends IterativeRobot>>();
@@ -56,8 +56,21 @@ public class EmulatorMain
 			@Override
 			public void run()
 			{
-	    		Reflections reflections = new Reflections();
-	    		mainClasses.addAll(reflections.getSubTypesOf(IterativeRobot.class));
+				try
+				{
+					Reflections reflections = new Reflections();
+					mainClasses.addAll(reflections.getSubTypesOf(IterativeRobot.class));
+				}
+				catch(NoClassDefFoundError error)
+				{
+					JOptionPane.showMessageDialog(new JFrame(),
+						"<html>Unfortunately, you've setup the FRC-Test classpath wrong. <br>"
+						+ "Make sure that the libraries Reflections, Guava, and javassist are available.</html>",
+						"Class Loading Error", 
+						JOptionPane.ERROR_MESSAGE);
+					error.printStackTrace();
+					System.exit(1);
+				}
 			}
     	}, "Robot Main Class Finder Thread");
         
