@@ -84,7 +84,11 @@ public class Gyro {
     }
     
     class Grid extends JPanel implements MouseListener, MouseMotionListener {
-        Grid() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 2777318053929167948L;
+		Grid() {
             addMouseListener(this);
             addMouseMotionListener(this);
             

@@ -126,6 +126,9 @@ public class RobotDrive {
             leftOutput = outputMagnitude;
             rightOutput = outputMagnitude;
         }
+        
+        jag1.set(leftOutput);
+        jag2.set(rightOutput);
      
     }
     
