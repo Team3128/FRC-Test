@@ -150,24 +150,34 @@ public class EmulatorMain
         	
         }));
         
-        robot.robotInit();
-        //runs autonomous and autonomous periodic
-        if(n == JOptionPane.YES_OPTION)
+        try
         {
-        	robot.autonomousInit();
-            while(true)
+        	robot.robotInit();
+            //runs autonomous and autonomous periodic
+            if(n == JOptionPane.YES_OPTION)
             {
-                robot.autonomousPeriodic(); 
-            }
-            //runs teleop and teleop periodic
-        } 
-        else if(n == JOptionPane.NO_OPTION)
-        {	
-        	robot.teleopInit();
-            while(true)
-            {    
-                robot.teleopPeriodic();
+            	robot.autonomousInit();
+                while(true)
+                {
+                    robot.autonomousPeriodic(); 
+                }
+                //runs teleop and teleop periodic
+            } 
+            else if(n == JOptionPane.NO_OPTION)
+            {	
+            	robot.teleopInit();
+                while(true)
+                {    
+                    robot.teleopPeriodic();
+                }
             }
         }
+        catch(Exception ex)
+        {
+        	System.err.println("Robot code threw an " + ex.getClass().getSimpleName() + ": " + ex.getMessage());
+        	ex.printStackTrace();
+        	System.exit(2);
+        }
+        
     }
 }

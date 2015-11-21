@@ -13,6 +13,7 @@ import java.nio.ByteOrder;
 import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
 import edu.wpi.first.wpilibj.tables.ITable;
 import edu.wpi.first.wpilibj.tables.ITableListener;
+import frctest.gui.PWMWindow;
 
 /**
  * Class implements the PWM generation in the FPGA.
@@ -116,6 +117,8 @@ public class PWM extends SensorBase implements LiveWindowSendable {
 
 
 		m_eliminateDeadband = false;
+		
+		PWMWindow.instance().addPWM(channel);
 	}
 
 	/**
@@ -316,6 +319,7 @@ public class PWM extends SensorBase implements LiveWindowSendable {
 	 */
 	public void setRaw(int value) {
 		rawValue = (short) value;
+		PWMWindow.instance().updatePWM(m_channel, rawValue);
 	}
 
 	/**
