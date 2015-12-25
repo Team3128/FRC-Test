@@ -39,36 +39,39 @@ public class EmulatedMotorController implements ComponentListener, ActionListene
      */
     public EmulatedMotorController(int channel, String name)
     {
-        frame = new JFrame(name + " Emulator: channel "  + channel);
-        
-        frame.setIconImage(EmulatorMain.appIcon);
-        
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //frame.setResizable(false);
-        frame.setLocation(510, 0);
-        frame.setLayout(new BorderLayout());
-        frame.setPreferredSize(new Dimension(300, 320));
-        
-        //tells the current speed of the talon in % above the graph.
-        speedLabel = new JLabel("Current Speed: " + (speed*100) + "%");
-        frame.add(speedLabel, BorderLayout.NORTH);
-        
-        //allows user to stop the movement of the graph. button located under the graph.
-        startStop = new JButton("Stop Graph");
-        startStop.addActionListener(this);
-        frame.add(startStop, BorderLayout.SOUTH);
-        
-        //makes the actual graph.
-        graph = new SpeedGrapher(300, 300);
-        frame.add(graph, BorderLayout.CENTER);
-        
-        startTime = 0;
-        isGraphRunning = true;
-        
-        frame.addComponentListener(this);
-
-        frame.pack();
-        frame.setVisible(true);
+    	if(EmulatorMain.enableGUI)
+    	{
+	        frame = new JFrame(name + " Emulator: channel "  + channel);
+	        
+	        frame.setIconImage(EmulatorMain.appIcon);
+	        
+	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	        //frame.setResizable(false);
+	        frame.setLocation(510, 0);
+	        frame.setLayout(new BorderLayout());
+	        frame.setPreferredSize(new Dimension(300, 320));
+	        
+	        //tells the current speed of the talon in % above the graph.
+	        speedLabel = new JLabel("Current Speed: " + (speed*100) + "%");
+	        frame.add(speedLabel, BorderLayout.NORTH);
+	        
+	        //allows user to stop the movement of the graph. button located under the graph.
+	        startStop = new JButton("Stop Graph");
+	        startStop.addActionListener(this);
+	        frame.add(startStop, BorderLayout.SOUTH);
+	        
+	        //makes the actual graph.
+	        graph = new SpeedGrapher(300, 300);
+	        frame.add(graph, BorderLayout.CENTER);
+	        
+	        startTime = 0;
+	        isGraphRunning = true;
+	        
+	        frame.addComponentListener(this);
+	
+	        frame.pack();
+	        frame.setVisible(true);
+    	}
     }
 
 	/**
@@ -76,12 +79,17 @@ public class EmulatedMotorController implements ComponentListener, ActionListene
      * @param speed The speed value of the Talon between -1.0 and +1.0.
      */
     public void set(double speed) {
-    	if (System.currentTimeMillis() - startTime > 35 && isGraphRunning) {
-    		graph.appendSpeed(speed);
-    		startTime = System.currentTimeMillis();
+    	
+    	if(EmulatorMain.enableGUI)
+    	{
+	    	if (System.currentTimeMillis() - startTime > 35 && isGraphRunning) {
+	    		graph.appendSpeed(speed);
+	    		startTime = System.currentTimeMillis();
+	    	}
+	        speedLabel.setText((int)((speed*100)*10)/10.0 + "%");
     	}
+    	
         this.speed = speed;
-        speedLabel.setText((int)((speed*100)*10)/10.0 + "%");
     }
 
     /**

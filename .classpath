@@ -5,5 +5,11 @@
 	<classpathentry kind="lib" path="lib/reflections-0.9.9-RC1.jar"/>
 	<classpathentry kind="lib" path="lib/javassist.jar" sourcepath="lib/javassist-rel_3_18_2_ga_build.zip"/>
 	<classpathentry kind="lib" path="lib/guava-18.0.jar"/>
+	<classpathentry kind="lib" path="lib/JavaJoystick.jar" sourcepath="lib/JavaJoystick-src.zip">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="FRC-Test/lib/native"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry combineaccessrules="false" kind="src" path="/frc-java-3128"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

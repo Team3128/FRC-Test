@@ -65,7 +65,7 @@ public class EmulatorMain
 				{
 					JOptionPane.showMessageDialog(new JFrame(),
 						"<html>Unfortunately, you've setup the FRC-Test classpath wrong. <br>"
-						+ "Make sure that the libraries Reflections, Guava, and javassist are available.</html>",
+						+ "Make sure that the libraries Reflections, Guava, JavaJoystick, and javassist are available.</html>",
 						"Class Loading Error", 
 						JOptionPane.ERROR_MESSAGE);
 					error.printStackTrace();

@@ -65,7 +65,7 @@ public class PWMWindow
 	
 	private PWMWindow()
 	{
-		frame = new JFrame("Relays");
+		frame = new JFrame("PWM Outputs");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocation(800, 0);
         frame.setLayout(new BorderLayout());
