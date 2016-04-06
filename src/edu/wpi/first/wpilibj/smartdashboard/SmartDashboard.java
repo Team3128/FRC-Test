@@ -12,10 +12,10 @@ import java.util.NoSuchElementException;
 
 import edu.wpi.first.wpilibj.NamedSendable;
 import edu.wpi.first.wpilibj.Sendable;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.networktables.NetworkTableKeyNotDefined;
 import edu.wpi.first.wpilibj.tables.ITable;
 import edu.wpi.first.wpilibj.tables.TableKeyNotDefinedException;
-import frctest.mock.MockTable;
 
 /*
  * Emulator Maker's Note:
@@ -34,7 +34,7 @@ import frctest.mock.MockTable;
  */
 public class SmartDashboard {
     /** The {@link NetworkTable} used by {@link SmartDashboard} */
-    public static final ITable table = new MockTable();
+    public static final ITable table = NetworkTable.getTable("SmartDashboard");
     /**
      * A table linking tables in the SmartDashboard to the {@link SmartDashboardData} objects
      * they came from.

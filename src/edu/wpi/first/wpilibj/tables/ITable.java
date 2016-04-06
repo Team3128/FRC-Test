@@ -213,5 +213,23 @@ public interface ITable {
      * @throws IllegalArgumentException if the key is null
      */
     public double getDouble(String key, double defaultValue);
+
+    /**
+     * Put a string array in the table
+     * @param key the key to be assigned to
+     * @param value the value that will be assigned
+     * @return False if the table key already exists with a different type
+     */
+    public boolean putStringArray(String key, String[] value);
+    
+    /**
+     * Returns the string array the key maps to. If the key does not exist or is
+     * of different type, it will return the default value.
+     * @param key the key to look up
+     * @param defaultValue the value to be returned if no value is found
+     * @return the value associated with the given key or the given default value
+     * if there is no value associated with the key
+     */
+    public String[] getStringArray(String key, String[] defaultValue);
         
 }

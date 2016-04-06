@@ -24,7 +24,7 @@ import frctest.gui.DigitalInputWindow;
 
 
 
-public class DigitalInput implements ActionListener
+public class DigitalInput extends DigitalSource implements ActionListener
 {
 	
 	public boolean state;

@@ -87,6 +87,12 @@ public class EmulatorMain
                         options,
                         options[0]);
         
+        //may as well start up NetworkTables while we wait
+        
+        //need to sort out native library issue first
+        //NetworkTable.setClientMode();
+        //NetworkTable.initialize();
+        
         try
 		{
 			robotClassFinder.join();

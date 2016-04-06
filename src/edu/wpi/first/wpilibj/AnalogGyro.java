@@ -16,6 +16,7 @@ import java.awt.event.MouseMotionListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import frctest.EmulatorMain;
 
 /*
@@ -39,7 +40,7 @@ import frctest.EmulatorMain;
  *
  * @author aubrey
  */
-public class Gyro {
+public class AnalogGyro implements Gyro {
     double angle;
 
 
@@ -56,7 +57,7 @@ public class Gyro {
     private Grid grid;
     
     
-    public Gyro(int channel) {
+    public AnalogGyro(int channel) {
         frame = new JFrame("Gyro Emulator: " + channel);
         
         frame.setLayout(new BorderLayout());
@@ -73,6 +74,7 @@ public class Gyro {
     
     }
     
+    @Override
     public double getAngle() {
         double aangle = (-Math.atan2(ypos - 250, xpos-250))*(180/Math.PI);
         angle = (aangle <= 0? aangle + 360: aangle);
@@ -180,4 +182,23 @@ public class Gyro {
         public void mouseExited(MouseEvent e) {}
         
     }
+
+	@Override
+	public void calibrate()
+	{
+		// do nothing
+	}
+
+	@Override
+	public double getRate()
+	{
+		// TODO not implemented
+		return 0;
+	}
+
+	@Override
+	public void free()
+	{
+		frame.dispose();
+	}
 }

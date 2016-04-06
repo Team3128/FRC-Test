@@ -40,14 +40,10 @@ import frctest.EmulatorMain;
 
 /**
  * Joystick emulation for FRC.
- * @author Nick DiRienzo, Patrick Jameson
+ * @author Nick DiRienzo, Patrick Jameson, Jamie Smith
  * @version 11.11.2010.7
  */
 public class Joystick implements KeyListener, JoystickListener {
-    //TODO: Add Joystick button support using KeyListener
-    //      -The above is done for one button at a time. Detecting many buttons being pressed at the same 
-    //       time is apparently not a trivial task for at least linux.
-    //TODO: Implement offsets and noise.
     
     private final static int JSHEIGHT = 500;//joy stick area height
     private final static int JSWIDTH = 500;//joy stick area width
@@ -63,11 +59,6 @@ public class Joystick implements KeyListener, JoystickListener {
     private static final int TRIGGER = 0;
     
     private int xpos, ypos, zpos;//pixel position. z is 0-460.
-    private double xOffset, yOffset;
-    private double drift;
-    
-    private long keyTime;
-    private boolean isTestingTime;
 
     private boolean mouseClicked = false;
 
@@ -164,6 +155,12 @@ public class Joystick implements KeyListener, JoystickListener {
         return axes[Z];
     }
     
+    /**
+     * Gets a value for a controller axis by number
+     * 0 indexed
+     * @param axisIndex
+     * @return The axis value, from -1.0 to 1.0
+     */
     public double getRawAxis(int axisIndex) {
         if(axisIndex >= 0 && axisIndex < axes.length)
         {
@@ -181,17 +178,61 @@ public class Joystick implements KeyListener, JoystickListener {
         return buttons[TRIGGER];
     }
     
+    public int getPOV(int pov)
+    {
+    	//TODO not implemented
+    	return 0;
+    }
+
+    
+    /**
+     * For the current joystick, return the number of POVs
+     */
+    public int getPOVCount() {
+    	//TODO not implemented
+    	return 0;
+    }
+    
+    /**
+     * For the current joystick, return the number of buttons
+     */
+    public int getButtonCount() {
+    	if(hardJoystickEnabled)
+    	{
+    		return hardwareJoystick.getNumButtons();
+    	}
+    	else
+    	{
+    		return buttons.length;
+    	}
+    }
+    
+    /**
+     * For the current joystick, return the number of axis
+     */
+    public int getAxisCount() {
+    	if(hardJoystickEnabled)
+    	{
+    		return hardwareJoystick.getNumAxes();
+    	}
+    	else
+    	{
+    		return axes.length;
+    	}
+    }
+    
     /**
      * Get whether the button is pressed.
      * 
-     * If a controller is plugged in, button information will come for it.  Otherwise, there will be 10 buttons, each corresponding to a number key.
+     * If a controller is plugged in, button information will come for it.  Otherwise, there will be 10 buttons (index 1-10), each corresponding to a number key.
      * @return True if the provided button is being pressed, false if not.  If the provided index is out of range, returns false.
      */
     public boolean getRawButton(int buttonIndex)
     {
-        if(buttonIndex >= 0 && buttonIndex < axes.length)
+    	
+        if(buttonIndex >= 1 && buttonIndex <= axes.length)
         {
-        	return buttons[buttonIndex];
+        	return buttons[buttonIndex - 1];
         }
         
         return false;
@@ -250,6 +291,7 @@ public class Joystick implements KeyListener, JoystickListener {
 		for(int index = 0; index < axes.length; ++index)
 		{
 			//YES, this is a use of the famed for-case antipattern!
+			//I need a loop because I need to only do axes below axes.length
 			switch(index)
 			{
 			case 0:
