@@ -49,7 +49,7 @@ public class RobotState {
 		}
 	}
 
-	interface Interface {
+	public interface Interface {
 		boolean isDisabled();
 		boolean isEnabled();
 		boolean isOperatorControl();

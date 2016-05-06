@@ -63,7 +63,7 @@ public class DriverStation implements RobotState.Interface {
    * @return True if the robot is enabled, false otherwise.
    */
   public boolean isEnabled() {
-	  return inAutonomous || inTeleop;
+	  return RobotState.isEnabled();
   }
 
   /**
@@ -73,7 +73,7 @@ public class DriverStation implements RobotState.Interface {
    * @return True if the robot should be disabled, false otherwise.
    */
   public boolean isDisabled() {
-    return !isEnabled();
+    return RobotState.isDisabled();
   }
 
   /**
@@ -83,7 +83,7 @@ public class DriverStation implements RobotState.Interface {
    * @return True if autonomous mode should be enabled, false otherwise.
    */
   public boolean isAutonomous() {
-    return inAutonomous;
+	  return RobotState.isTest();
   }
 
   /**
@@ -93,8 +93,7 @@ public class DriverStation implements RobotState.Interface {
    * @return True if test mode should be enabled, false otherwise.
    */
   public boolean isTest() {
-	  //TODO not implemented
-	  return false;
+	  return RobotState.isTest();
   }
 
   /**
@@ -105,7 +104,7 @@ public class DriverStation implements RobotState.Interface {
    *         otherwise.
    */
   public boolean isOperatorControl() {
-    return !(isAutonomous() || isTest());
+    return RobotState.isOperatorControl();
   }
 
   /**
@@ -261,5 +260,23 @@ public class DriverStation implements RobotState.Interface {
    */
   public void InTest(boolean entering) {
 	  //TODO not implemented
+  }
+
+  public boolean isNewControlData()
+  {
+    // TODO Auto-generated method stub
+	return true;
+  }
+  
+  public void waitForData()
+  {
+	  try
+	{
+		Thread.sleep(10);
+	}
+	catch(InterruptedException e)
+	{
+		e.printStackTrace();
+	}
   }
 }

@@ -11,7 +11,8 @@ import javax.swing.JOptionPane;
 
 import org.reflections.Reflections;
 
-import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.RobotState;
 
 /*
  *  This file is part of frcjcss.
@@ -30,10 +31,12 @@ import edu.wpi.first.wpilibj.IterativeRobot;
  *  along with frcjcss.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class EmulatorMain 
+public class EmulatorMain
 {	
-    static IterativeRobot robot;
     
+	static RobotBase robot;
+	static RobotStateProxy stateProxy;
+	
     //if we are running in test mode, we want to be able to instantiate objects without
     //popping up GUI windows everywhere.  This boolean acts as a master switch for these
     //windows.  In emulation mode, it is turned on by main(), which enables the GUI.  
@@ -50,7 +53,7 @@ public class EmulatorMain
     	appIcon = new ImageIcon(EmulatorMain.class.getClassLoader().getResource("images/Icon_attempt3.png")).getImage();
     	
     	//do this stuff in a different thread while the dialog is running because it takes like 3 seconds
-    	final ArrayList<Class<? extends IterativeRobot>> mainClasses = new ArrayList<Class<? extends IterativeRobot>>();
+    	final ArrayList<Class<? extends RobotBase>> mainClasses = new ArrayList<Class<? extends RobotBase>>();
         Thread robotClassFinder = new Thread(new Runnable()
     	{
 			@Override
@@ -59,7 +62,7 @@ public class EmulatorMain
 				try
 				{
 					Reflections reflections = new Reflections();
-					mainClasses.addAll(reflections.getSubTypesOf(IterativeRobot.class));
+					mainClasses.addAll(reflections.getSubTypesOf(RobotBase.class));
 				}
 				catch(NoClassDefFoundError error)
 				{
@@ -105,7 +108,7 @@ public class EmulatorMain
         //init the robot main class
         if(mainClasses.isEmpty())
         {
-        	System.out.println("Oops! There aren't any classes that extend IterativeRobot on the classpath!");
+        	System.out.println("Oops! There aren't any classes that extend RobotBase on the classpath!");
         	return;
         }
         
@@ -122,7 +125,7 @@ public class EmulatorMain
             }
             
             mainClassIndex = JOptionPane.showOptionDialog(new JFrame(),
-                            "Which IterativeRobot class to start?",
+                            "Which robot class to start?",
                             "Robot Emulator",
                             JOptionPane.DEFAULT_OPTION,
                             JOptionPane.QUESTION_MESSAGE,
@@ -133,9 +136,9 @@ public class EmulatorMain
        
         try
 		{
-			Class<? extends IterativeRobot> clazz = (Class<? extends IterativeRobot>) mainClasses.toArray()[mainClassIndex];
+			Class<? extends RobotBase> clazz = (Class<? extends RobotBase>) mainClasses.toArray()[mainClassIndex];
 			Constructor<?> constructor = clazz.getConstructor();
-			robot = (IterativeRobot) constructor.newInstance();
+			robot = (RobotBase) constructor.newInstance();
 		}
         catch (Exception e)
 		{
@@ -144,6 +147,10 @@ public class EmulatorMain
 			return;
 		}
         
+        stateProxy = new RobotStateProxy();
+        stateProxy.autonomous = n == JOptionPane.YES_OPTION;
+        stateProxy.teleop = n == JOptionPane.NO_OPTION;
+        
         //register our handler for when the app is closed
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable()
         {
@@ -151,32 +158,14 @@ public class EmulatorMain
 			@Override
 			public void run()
 			{
-				robot.disabledInit();
+				stateProxy.enabled = false;
 			}
         	
         }));
         
         try
         {
-        	robot.robotInit();
-            //runs autonomous and autonomous periodic
-            if(n == JOptionPane.YES_OPTION)
-            {
-            	robot.autonomousInit();
-                while(true)
-                {
-                    robot.autonomousPeriodic(); 
-                }
-                //runs teleop and teleop periodic
-            } 
-            else if(n == JOptionPane.NO_OPTION)
-            {	
-            	robot.teleopInit();
-                while(true)
-                {    
-                    robot.teleopPeriodic();
-                }
-            }
+        	robot.startCompetition();
         }
         catch(Exception ex)
         {
@@ -186,4 +175,43 @@ public class EmulatorMain
         }
         
     }
+    
+    static class RobotStateProxy implements RobotState.Interface
+    {
+    	boolean enabled = true;
+    	boolean autonomous = false;
+    	boolean teleop = false;
+
+		@Override
+		public boolean isDisabled()
+		{
+			return !enabled;
+		}
+
+		@Override
+		public boolean isEnabled()
+		{
+			return enabled;
+		}
+
+		@Override
+		public boolean isOperatorControl()
+		{
+			return teleop;
+		}
+
+		@Override
+		public boolean isAutonomous()
+		{
+			return autonomous;
+		}
+
+		@Override
+		public boolean isTest()
+		{
+			return false;
+		}
+    	
+    }
+  
 }

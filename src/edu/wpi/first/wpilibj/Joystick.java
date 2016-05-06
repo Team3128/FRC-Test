@@ -193,6 +193,18 @@ public class Joystick implements KeyListener, JoystickListener {
     	return 0;
     }
     
+    public float getThrottle()
+    {
+    	//TODO not implemented
+    	return 0;
+    }
+    
+    public float getTwist()
+    {
+    	//TODO not implemented
+    	return 0;
+    }
+    
     /**
      * For the current joystick, return the number of buttons
      */
