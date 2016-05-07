@@ -13,6 +13,8 @@ import org.reflections.Reflections;
 
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotState;
+import edu.wpi.first.wpilibj.SoftwareTimer;
+import edu.wpi.first.wpilibj.Timer;
 
 /*
  *  This file is part of frcjcss.
@@ -133,6 +135,12 @@ public class EmulatorMain
                             classes,
                             classes[0]);
         }
+        
+        if(mainClassIndex < 0)
+        {
+        	//user closed dialog box
+        	return;
+        }
        
         try
 		{
@@ -147,9 +155,15 @@ public class EmulatorMain
 			return;
 		}
         
+        //initialize WPILib static objects
+        
         stateProxy = new RobotStateProxy();
         stateProxy.autonomous = n == JOptionPane.YES_OPTION;
         stateProxy.teleop = n == JOptionPane.NO_OPTION;
+        
+        RobotState.SetImplementation(stateProxy);
+        
+        Timer.SetImplementation(new SoftwareTimer());
         
         //register our handler for when the app is closed
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable()
