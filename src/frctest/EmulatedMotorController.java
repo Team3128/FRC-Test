@@ -75,8 +75,8 @@ public class EmulatedMotorController implements ComponentListener, ActionListene
     }
 
 	/**
-     * Sets the value of the Talon using a value between -1.0 and +1.0.
-     * @param speed The speed value of the Talon between -1.0 and +1.0.
+     * Sets the value of the motor controller using a value between -1.0 and +1.0.
+     * @param speed The speed value between -1.0 and +1.0.
      */
     public void set(double speed) {
     	
@@ -123,7 +123,7 @@ public class EmulatedMotorController implements ComponentListener, ActionListene
 	public void pidWrite(double output)
 	{
 		//TODO make sure this is right
-		set(speed + output);
+		set(output);
 	}
 
 	@Override

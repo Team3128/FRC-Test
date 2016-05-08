@@ -60,7 +60,7 @@ public class Joystick implements KeyListener, JoystickListener {
     
     private int xpos, ypos, zpos;//pixel position. z is 0-460.
 
-    private boolean mouseClicked = false;
+    private boolean locked = false;
 
     private JFrame frame;
     private Grid grid;
@@ -236,15 +236,14 @@ public class Joystick implements KeyListener, JoystickListener {
     /**
      * Get whether the button is pressed.
      * 
-     * If a controller is plugged in, button information will come for it.  Otherwise, there will be 10 buttons (index 1-10), each corresponding to a number key.
+     * If a controller is plugged in, button information will come for it.  Otherwise, there will be 10 buttons (index 0-9), each corresponding to a number key.
      * @return True if the provided button is being pressed, false if not.  If the provided index is out of range, returns false.
      */
     public boolean getRawButton(int buttonIndex)
     {
-    	
-        if(buttonIndex >= 1 && buttonIndex <= axes.length)
+        if(buttonIndex >= 0 && buttonIndex < axes.length)
         {
-        	return buttons[buttonIndex - 1];
+        	return buttons[buttonIndex];
         }
         
         return false;
@@ -261,7 +260,7 @@ public class Joystick implements KeyListener, JoystickListener {
     {
         int keycode = event.getKeyChar() - 48;
         if (keycode >= 0 && keycode <= 9) {
-        	return keycode + 1;
+        	return keycode;
         }
        
         return -1;
@@ -269,31 +268,38 @@ public class Joystick implements KeyListener, JoystickListener {
     
     public void keyPressed(KeyEvent e) 
     {
-        int index = getButtonIndexForKeyChar(e);
-        
-        if(index > -1)
-        {
-            buttons[index] = true;
+    	if(!locked)
+    	{
+            int index = getButtonIndexForKeyChar(e);
             
-            if(grid != null)
+            if(index > -1)
             {
-            	grid.repaint();
+                buttons[index] = true;
+                
+                if(grid != null)
+                {
+                	grid.repaint();
+                }
             }
-        }
+    	}
     }
     
-    public void keyReleased(KeyEvent e) {
-        int index = getButtonIndexForKeyChar(e);
-        
-        if(index > -1)
-        {
-            buttons[index] = false;
-            
-            if(grid != null)
-            {
-            	grid.repaint();
-            }
-        }
+    public void keyReleased(KeyEvent e)
+    {
+    	if(!locked)
+    	{
+	        int index = getButtonIndexForKeyChar(e);
+	        
+	        if(index > -1)
+	        {
+	            buttons[index] = false;
+	            
+	            if(grid != null)
+	            {
+	            	grid.repaint();
+	            }
+	        }
+    	}
     }
     public void keyTyped(KeyEvent e) {}
     
@@ -344,7 +350,7 @@ public class Joystick implements KeyListener, JoystickListener {
 		{
 			buttons[counter] = (buttonValues & buttonBitmask) > 0;
 						
-			buttonBitmask *= 2;
+			buttonBitmask <<= 1;
 		}
 		
         if(grid != null)
@@ -433,7 +439,7 @@ public class Joystick implements KeyListener, JoystickListener {
             joystickString.append(')');
             
             g.drawString(joystickString.toString(), 5, 20);
-            g.drawString("Joystick is " + (mouseClicked?"":"not ") + "locked", 5, 60);
+            g.drawString("Joystick is " + (locked?"":"not ") + "locked", 5, 60);
             
             StringBuilder buttonsString = new StringBuilder();
             buttonsString.append("Buttons: ");
@@ -467,7 +473,7 @@ public class Joystick implements KeyListener, JoystickListener {
         }
         
         public void determineMousePos(MouseEvent e) {
-            if(!mouseClicked) {
+            if(!locked) {
                 xpos = e.getX();
                 ypos = e.getY();
                 if (ypos > JSHEIGHT)
@@ -492,7 +498,7 @@ public class Joystick implements KeyListener, JoystickListener {
 
         public void mousePressed(MouseEvent e) {
             if (e.getButton() == 1)
-                mouseClicked = !mouseClicked;
+                locked = !locked;
             else if (e.getButton() == 3)
                 buttons[TRIGGER] = true;
             repaint();

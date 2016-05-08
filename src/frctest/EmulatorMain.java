@@ -11,8 +11,10 @@ import javax.swing.JOptionPane;
 
 import org.reflections.Reflections;
 
+import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotState;
+import edu.wpi.first.wpilibj.SampleRobot;
 import edu.wpi.first.wpilibj.SoftwareTimer;
 import edu.wpi.first.wpilibj.Timer;
 
@@ -113,6 +115,10 @@ public class EmulatorMain
         	System.out.println("Oops! There aren't any classes that extend RobotBase on the classpath!");
         	return;
         }
+        
+        //remove the built-in classes
+        mainClasses.remove(IterativeRobot.class);
+        mainClasses.remove(SampleRobot.class);
         
         //figure out which class to use
         int mainClassIndex = 0;
