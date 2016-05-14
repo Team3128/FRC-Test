@@ -48,12 +48,12 @@ public class Joystick implements KeyListener, JoystickListener {
     private final static int JSHEIGHT = 500;//joy stick area height
     private final static int JSWIDTH = 500;//joy stick area width
 
-    private double[] axes;
+    public double[] axes;
     
     //index for standard three axes
     private static final int X=0, Y=1, Z=2;
     
-    private boolean[] buttons;
+    public boolean[] buttons;
     
     //index for trigger
     private static final int TRIGGER = 0;
