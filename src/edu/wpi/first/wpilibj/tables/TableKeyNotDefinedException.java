@@ -1,6 +1,6 @@
 package edu.wpi.first.wpilibj.tables;
 
-import edu.wpi.first.wpilibj.networktables.NetworkTableKeyNotDefined;
+import java.util.NoSuchElementException;
 
 /**
  * An exception throw when the lookup a a key-value fails in a {@link ITable}
@@ -8,13 +8,13 @@ import edu.wpi.first.wpilibj.networktables.NetworkTableKeyNotDefined;
  * @author Mitchell
  *
  */
-public class TableKeyNotDefinedException extends NetworkTableKeyNotDefined {
+public class TableKeyNotDefinedException extends NoSuchElementException {
 
 	/**
 	 * @param key the key that was not defined in the table
 	 */
 	public TableKeyNotDefinedException(String key) {
-		super(key);
+		super("Unknown Table Key: "+key);
 	}
 
 }

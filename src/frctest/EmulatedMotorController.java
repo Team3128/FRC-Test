@@ -22,9 +22,13 @@ import frctest.gui.SpeedGrapher;
 public class EmulatedMotorController implements ComponentListener, ActionListener, SpeedController
 {
 
-    private double speed;
+	public double speed;
+    public boolean enabled;
+    public boolean inverted;
+    
     private long startTime;
     private boolean isGraphRunning;
+    
 
     private JFrame frame;
     private JLabel speedLabel;
@@ -39,6 +43,9 @@ public class EmulatedMotorController implements ComponentListener, ActionListene
      */
     public EmulatedMotorController(int channel, String name)
     {
+    	inverted = false;
+    	enabled = false;
+    	
     	if(EmulatorMain.enableGUI)
     	{
 	        frame = new JFrame(name + " Emulator: channel "  + channel);
@@ -80,6 +87,11 @@ public class EmulatedMotorController implements ComponentListener, ActionListene
      */
     public void set(double speed) {
     	
+		if(inverted)
+		{
+			speed = -speed;
+		}
+		
     	if(EmulatorMain.enableGUI)
     	{
 	    	if (System.currentTimeMillis() - startTime > 35 && isGraphRunning) {
@@ -135,6 +147,24 @@ public class EmulatedMotorController implements ComponentListener, ActionListene
 	@Override
 	public void disable()
 	{
-		//TODO implement this
+		enabled = false;
+	}
+
+	@Override
+	public void setInverted(boolean isInverted)
+	{
+		inverted = isInverted;
+	}
+
+	@Override
+	public boolean getInverted()
+	{
+		return inverted;
+	}
+
+	@Override
+	public void stopMotor()
+	{
+		speed = 0;
 	}
 }

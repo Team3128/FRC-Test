@@ -14,4 +14,9 @@ Simple Emulation package for FIRST Robotics Java code running on a roboRIO
 
 - Create a new Ant Run Configuration by right-clicking build.xml in the project explorer and choosing Run As > Ant Build...
 Select the `runemulator` target in the targets tab.
-Then, run the configuration, and the emulator will search for all classes extending IterativeRobot and ask which one you want to run. 
+Then, run the configuration, and the emulator will search for all classes extending RobotBase (ant IterativeRobot and SampleRobot) and ask which one you want to run. 
+
+
+### Code
+This project uses a significant amount of code from the NetworkTables and WPILib libraries.  This code is the property of its owners / authors.
+Thank you, FIRST, for making this possible by making WPILib open-source.
