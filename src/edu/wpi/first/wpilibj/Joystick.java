@@ -241,7 +241,7 @@ public class Joystick implements KeyListener, JoystickListener {
      */
     public boolean getRawButton(int buttonIndex)
     {
-        if(buttonIndex >= 0 && buttonIndex < axes.length)
+        if(buttonIndex >= 0 && buttonIndex < buttons.length)
         {
         	return buttons[buttonIndex];
         }
@@ -266,6 +266,7 @@ public class Joystick implements KeyListener, JoystickListener {
         return -1;
     }
     
+    @Override
     public void keyPressed(KeyEvent e) 
     {
     	if(!locked)
@@ -275,7 +276,7 @@ public class Joystick implements KeyListener, JoystickListener {
             if(index > -1)
             {
                 buttons[index] = true;
-                
+                                
                 if(grid != null)
                 {
                 	grid.repaint();
