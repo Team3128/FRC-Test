@@ -109,33 +109,32 @@ public class CameraServer {
         setImageData(data, index);
     }
 
-//    /**
-//     * Start automatically capturing images to send to the dashboard.
-//     * You should call this method to just see a camera feed on the dashboard
-//     * without doing any vision processing on the roboRIO. {@link #setImage}
-//     * shouldn't be called after this is called.
-//     * This overload calles {@link #startAutomaticCapture(String)} with the
-//     * default camera name
-//     */
-//    public void startAutomaticCapture() {
-//        startAutomaticCapture(USBCamera.kDefaultCameraName);
-//    }
-//
-//    /**
-//     * Start automatically capturing images to send to the dashboard.
-//     *
-//     * You should call this method to just see a camera feed on the dashboard
-//     * without doing any vision processing on the roboRIO. {@link #setImage}
-//     * shouldn't be called after this is called.
-//     *
-//     * @param cameraName
-//     *            The name of the camera interface (e.g. "cam1")
-//     */
-//    public void startAutomaticCapture(String cameraName) {
-//        USBCamera camera = new USBCamera(cameraName);
-//        camera.openCamera();
-//        startAutomaticCapture(camera);
-//    }
+    /**
+     * Start automatically capturing images to send to the dashboard.
+     * You should call this method to just see a camera feed on the dashboard
+     * without doing any vision processing on the roboRIO. {@link #setImage}
+     * shouldn't be called after this is called.
+     * This overload calles {@link #startAutomaticCapture(String)} with the
+     * default camera name
+     */
+    public void startAutomaticCapture() {
+    	//TODO not implemented
+    }
+
+    /**
+     * Start automatically capturing images to send to the dashboard.
+     *
+     * You should call this method to just see a camera feed on the dashboard
+     * without doing any vision processing on the roboRIO. {@link #setImage}
+     * shouldn't be called after this is called.
+     *
+     * @param cameraName
+     *            The name of the camera interface (e.g. "cam1")
+     */
+    public void startAutomaticCapture(String cameraName) {
+    	//TODO not implemented
+
+    }
 //
 //    public synchronized void startAutomaticCapture(USBCamera camera) {
 //        if (m_autoCaptureStarted) return;
@@ -219,24 +218,24 @@ public class CameraServer {
 //        }
 //    }
 //
-//    /**
-//     * Set the quality of the compressed image sent to the dashboard
-//     *
-//     * @param quality
-//     *            The quality of the JPEG image, from 0 to 100
-//     */
-//    public synchronized void setQuality(int quality) {
-//        m_quality = quality > 100 ? 100 : quality < 0 ? 0 : quality;
-//    }
-//
-//    /**
-//     * Get the quality of the compressed image sent to the dashboard
-//     *
-//     * @return The quality, from 0 to 100
-//     */
-//    public synchronized int getQuality() {
-//        return m_quality;
-//    }
+    /**
+     * Set the quality of the compressed image sent to the dashboard
+     *
+     * @param quality
+     *            The quality of the JPEG image, from 0 to 100
+     */
+    public synchronized void setQuality(int quality) {
+        m_quality = quality > 100 ? 100 : quality < 0 ? 0 : quality;
+    }
+
+    /**
+     * Get the quality of the compressed image sent to the dashboard
+     *
+     * @return The quality, from 0 to 100
+     */
+    public synchronized int getQuality() {
+        return m_quality;
+    }
 //
 //    /**
 //     * Run the M-JPEG server.
