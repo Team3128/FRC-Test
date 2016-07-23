@@ -75,20 +75,23 @@ public class Joystick implements KeyListener, JoystickListener {
      */
     public Joystick(int port) 
     {
-        if(com.centralnexus.input.Joystick.getNumDevices() > port && com.centralnexus.input.Joystick.isPluggedIn(port))
-        {
-        	try
-			{
-				hardwareJoystick = com.centralnexus.input.Joystick.createInstance(port);
-				hardJoystickEnabled = true;
-				System.out.println("[FRC-Test] Hardware joystick found for port " + port);
-			}
-			catch(IOException e)
-			{
-				System.err.println("[FRC-Test] Error opening joystick");
-				e.printStackTrace();
-			}
-        }
+    	if(EmulatorMain.hasNativeJoystickLibrary)
+    	{
+	        if(com.centralnexus.input.Joystick.getNumDevices() > port && com.centralnexus.input.Joystick.isPluggedIn(port))
+	        {
+	        	try
+				{
+					hardwareJoystick = com.centralnexus.input.Joystick.createInstance(port);
+					hardJoystickEnabled = true;
+					System.out.println("[FRC-Test] Hardware joystick found for port " + port);
+				}
+				catch(IOException e)
+				{
+					System.err.println("[FRC-Test] Error opening joystick");
+					e.printStackTrace();
+				}
+	        }
+    	}
         
         if(hardJoystickEnabled)
         {
