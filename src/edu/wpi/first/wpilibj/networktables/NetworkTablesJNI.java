@@ -1,13 +1,13 @@
 package edu.wpi.first.wpilibj.networktables;
 
-import edu.wpi.first.wpilibj.tables.*;
-
 import java.io.File;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.ByteBuffer;
+
+import edu.wpi.first.wpilibj.tables.TableKeyNotDefinedException;
 
 public class NetworkTablesJNI {
   static boolean libraryLoaded = false;
@@ -57,7 +57,8 @@ public class NetworkTablesJNI {
             System.loadLibrary("ntcore");
           }
         } else {
-          System.loadLibrary("ntcore");
+          //changed by FRC-Test for 32 and 64 bit support
+          System.loadLibrary("ntcore" + System.getProperty("sun.arch.data.model"));
         }
       } catch (IOException ex) {
         ex.printStackTrace();

@@ -1,5 +1,12 @@
 package frctest.gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Timer;
+
+import edu.wpi.first.wpilibj.SpeedController;
+
 /*
  *  This file is part of frcjcss.
  *
@@ -23,49 +30,65 @@ package frctest.gui;
  * @author Patrick Jameson
  * @version 11.20.2010.0
  */
-@SuppressWarnings("serial")
-public class SpeedGrapher extends Graph {
-	private double[][] points;
-	private double curTime;
-	private int numPoints;
+public class SpeedGrapher extends Graph implements ActionListener {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6388043799343706701L;
+	
+	private Timer updateTimer;
+	
+	private final int delayMs;
+
+	private final static int GRAPH_LENGTH_SEC = 10;	
+	private final static int POINTS_PER_SEC = 10;
+	private final static int LINES_PER_UNIT = 10; //number of gridlines per 1 motor power
+
+	long estimatedTime = 0;
+	long startTime;
+	
+	int timerTimesFired = 1;
+	
+	private SpeedController speedController;
+	
 	/**
 	 * Constructs a SpeedGrapher with desired dimensions.
 	 * 
 	 * @param _width Desired width of the graph.
 	 * @param _height Desired height of the graph.
 	 */
-	public SpeedGrapher(int _width, int _height) {
-		super(_width, _height);
-		points = new double[1000][2];//1500 is the allocated amount of points.
-		curTime = 0;
-		numPoints = 0;
+	public SpeedGrapher(int width, int height, SpeedController speedController) {
+		super(width, height, GRAPH_LENGTH_SEC * POINTS_PER_SEC, width / (double)GRAPH_LENGTH_SEC, height / (double)LINES_PER_UNIT, height / 2);
+		
+		this.speedController = speedController;
+		
+		delayMs = (int)(1000.0 / POINTS_PER_SEC);
+		
+		updateTimer = new Timer(delayMs, this);
+		updateTimer.setRepeats(true);
+		updateTimer.start();
+		
+		startTime = System.currentTimeMillis();
 	}
-	
-	/**
-	 * Appends a point on the graph with the speed provided.
-	 * 
-	 * TODO: make this more efficient.
-	 * 
-	 * @param speed Speed to be graphed.
-	 */
-	public void appendSpeed(double speed) {
-		double[] addedPoints = {curTime, speed*10};
-		if (numPoints < points.length-1) {
-			numPoints++;
-			points[numPoints] = addedPoints;
-		} else {
-			System.arraycopy(points, 1, points, 0, points.length-1);
-			points[points.length-1] = addedPoints;
-		}
+
+	@Override
+	//called when the timer fires
+	public void actionPerformed(ActionEvent e)
+	{
+		estimatedTime += delayMs;
 		
-		double[][] sendingPoints = new double[numPoints][2];
-		System.arraycopy(points, 0, sendingPoints, 0, numPoints);
+		long exactTime = System.currentTimeMillis() - startTime;
 		
-		setRange(10, -10);
-		setPoints(sendingPoints);
-		setXAxisPosition(curTime-(super.getWidth()/2/super.getScale())+(20/super.getScale()));
+		System.out.printf("Estimated runtime: %d, Exact runtime: %d, diff: %d", estimatedTime, exactTime, estimatedTime - exactTime);
 		
-		curTime+=0.15;
+		//the graph is scaled by LINES_PER_UNIT because the graph is in 1/LINES_PER_UNIT scale
+		addPoint(speedController.get() * LINES_PER_UNIT);
 		
+		
+		//correct for timer drift
+		long timeOffset = (System.currentTimeMillis() - startTime) - (timerTimesFired * delayMs);
+		
+		updateTimer.setDelay(delayMs - (int)timeOffset);
 	}
 }

@@ -201,4 +201,9 @@ public class AnalogGyro implements Gyro {
 	{
 		frame.dispose();
 	}
+	
+	public void setSensitivity(double sensitivity)
+	{
+		//do nothing
+	}
 }

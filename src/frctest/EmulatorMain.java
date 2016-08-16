@@ -185,28 +185,22 @@ public class EmulatorMain
         
         Timer.SetImplementation(new SoftwareTimer());
         
-        //register our handler for when the app is closed
-        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable()
+        Thread robotCodeThread = new Thread(() ->
         {
-
-			@Override
-			public void run()
-			{
-				stateProxy.enabled = false;
-			}
-        	
-        }));
+        	 try
+             {
+             	robot.startCompetition();
+             }
+             catch(Exception ex)
+             {
+             	System.err.println("Robot code threw an " + ex.getClass().getSimpleName() + ": " + ex.getMessage());
+             	ex.printStackTrace();
+             	System.exit(2);
+             }
+        });
         
-        try
-        {
-        	robot.startCompetition();
-        }
-        catch(Exception ex)
-        {
-        	System.err.println("Robot code threw an " + ex.getClass().getSimpleName() + ": " + ex.getMessage());
-        	ex.printStackTrace();
-        	System.exit(2);
-        }
+        robotCodeThread.setDaemon(true);
+        robotCodeThread.start();
         
     }
     

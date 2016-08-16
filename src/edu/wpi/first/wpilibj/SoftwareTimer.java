@@ -10,7 +10,17 @@ package edu.wpi.first.wpilibj;
  * 
  * The real version uses the FPGA, this simulation one uses System.nanoTime().
  */
-public class SoftwareTimer implements Timer.StaticInterface {
+public class SoftwareTimer implements Timer.StaticInterface 
+{
+	//time since the class was constructed
+	//used for FPGA timestamp
+	private final long startTime;
+	
+	public SoftwareTimer()
+	{
+		startTime = System.nanoTime();
+	}
+	
   /**
    * Pause the thread for a specified time. Pause the execution of the thread
    * for a specified period of time given in seconds. Motors will continue to
@@ -36,7 +46,7 @@ public class SoftwareTimer implements Timer.StaticInterface {
    */
   @Override
   public double getFPGATimestamp() {
-    return System.nanoTime() / 1e6;
+    return (System.nanoTime() - startTime) / 1e6;
   }
 
   @Override
