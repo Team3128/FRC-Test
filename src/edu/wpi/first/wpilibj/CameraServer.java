@@ -118,7 +118,7 @@ public class CameraServer {
      * default camera name
      */
     public void startAutomaticCapture() {
-    	//TODO implement this
+    	//TODO not implemented
     }
 
     /**
@@ -132,11 +132,25 @@ public class CameraServer {
      *            The name of the camera interface (e.g. "cam1")
      */
     public void startAutomaticCapture(String cameraName) {
-    	//TODO implement this
-    }
+    	//TODO not implemented
 
+    }
+//
 //    public synchronized void startAutomaticCapture(USBCamera camera) {
-//       //TODO implement this
+//        if (m_autoCaptureStarted) return;
+//        m_autoCaptureStarted = true;
+//        m_camera = camera;
+//
+//        m_camera.startCapture();
+//
+//        Thread captureThread = new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    capture();
+//                }
+//            });
+//        captureThread.setName("Camera Capture Thread");
+//        captureThread.start();
 //    }
 //
 //    protected void capture() {
@@ -175,24 +189,35 @@ public class CameraServer {
 //
 //
 //
-    /**
-     * check if auto capture is started
-     *
-     */
-    public synchronized boolean isAutoCaptureStarted() {
-        return m_autoCaptureStarted;
-    }
-
-    /**
-     * Sets the size of the image to use. Use the public kSize constants
-     * to set the correct mode, or set it directory on a camera and call
-     * the appropriate autoCapture method
-     * @param size The size to use
-     */
-    public synchronized void setSize(int size) {
-    	//TODO implement this
-    }
-
+//    /**
+//     * check if auto capture is started
+//     *
+//     */
+//    public synchronized boolean isAutoCaptureStarted() {
+//        return m_autoCaptureStarted;
+//    }
+//
+//    /**
+//     * Sets the size of the image to use. Use the public kSize constants
+//     * to set the correct mode, or set it directory on a camera and call
+//     * the appropriate autoCapture method
+//     * @param size The size to use
+//     */
+//    public synchronized void setSize(int size) {
+//        if (m_camera == null) return;
+//        switch (size) {
+//        case kSize640x480:
+//            m_camera.setSize(640, 480);
+//            break;
+//        case kSize320x240:
+//            m_camera.setSize(320, 240);
+//            break;
+//        case kSize160x120:
+//            m_camera.setSize(160, 120);
+//            break;
+//        }
+//    }
+//
     /**
      * Set the quality of the compressed image sent to the dashboard
      *

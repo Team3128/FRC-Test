@@ -26,7 +26,6 @@ public class EmulatedMotorController implements ComponentListener, ActionListene
     public boolean enabled;
     public boolean inverted;
     
-    private long startTime;
     private boolean isGraphRunning;
     
 
@@ -68,10 +67,9 @@ public class EmulatedMotorController implements ComponentListener, ActionListene
 	        frame.add(startStop, BorderLayout.SOUTH);
 	        
 	        //makes the actual graph.
-	        graph = new SpeedGrapher(300, 300);
+	        graph = new SpeedGrapher(300, 300, this);
 	        frame.add(graph, BorderLayout.CENTER);
 	        
-	        startTime = 0;
 	        isGraphRunning = true;
 	        
 	        frame.addComponentListener(this);
@@ -92,15 +90,6 @@ public class EmulatedMotorController implements ComponentListener, ActionListene
 			speed = -speed;
 		}
 		
-    	if(EmulatorMain.enableGUI)
-    	{
-	    	if (System.currentTimeMillis() - startTime > 35 && isGraphRunning) {
-	    		graph.appendSpeed(speed);
-	    		startTime = System.currentTimeMillis();
-	    	}
-	        speedLabel.setText((int)((speed*100)*10)/10.0 + "%");
-    	}
-    	
         this.speed = speed;
     }
 
@@ -115,7 +104,8 @@ public class EmulatedMotorController implements ComponentListener, ActionListene
     //add pidWrite method?
     
 	public void componentResized(ComponentEvent e) {
-		graph.setGraphSize(frame.getWidth(), frame.getHeight());
+		//TODO re-add this support
+		//graph.setGraphSize(frame.getWidth(), frame.getHeight());
 		graph.repaint();
 	}
     

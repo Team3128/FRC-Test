@@ -47,6 +47,9 @@ public class EmulatorMain
     //main() is not called by junit, so in test mode it stays initialized to false.
     public static boolean enableGUI = false;
     
+    //true if the JavaJoystic native library has been loaded and it is safe to create com.centralnexus.input.Joystick classes
+    public static boolean hasNativeJoystickLibrary = true;
+    
     public static Image appIcon;
     
     @SuppressWarnings("unchecked")
@@ -150,7 +153,18 @@ public class EmulatorMain
         	//user closed dialog box
         	return;
         }
-       
+        
+        //Try loading the hardware joystick library
+        try
+        {
+        	com.centralnexus.input.Joystick.getNumDevices();
+        }
+        catch(UnsatisfiedLinkError err)
+        {
+        	System.out.println("JavaJoystick native library not present for this platform.  Hardware joystick support disabled");
+        	hasNativeJoystickLibrary = false;
+        }
+        
         try
 		{
 			Class<? extends RobotBase> clazz = (Class<? extends RobotBase>) mainClasses.toArray()[mainClassIndex];
@@ -174,28 +188,22 @@ public class EmulatorMain
         
         Timer.SetImplementation(new SoftwareTimer());
         
-        //register our handler for when the app is closed
-        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable()
+        Thread robotCodeThread = new Thread(() ->
         {
-
-			@Override
-			public void run()
-			{
-				stateProxy.enabled = false;
-			}
-        	
-        }));
+        	 try
+             {
+             	robot.startCompetition();
+             }
+             catch(Exception ex)
+             {
+             	System.err.println("Robot code threw an " + ex.getClass().getSimpleName() + ": " + ex.getMessage());
+             	ex.printStackTrace();
+             	System.exit(2);
+             }
+        });
         
-        try
-        {
-        	robot.startCompetition();
-        }
-        catch(Exception ex)
-        {
-        	System.err.println("Robot code threw an " + ex.getClass().getSimpleName() + ": " + ex.getMessage());
-        	ex.printStackTrace();
-        	System.exit(2);
-        }
+        robotCodeThread.setDaemon(true);
+        robotCodeThread.start();
         
     }
     

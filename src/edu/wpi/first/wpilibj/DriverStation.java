@@ -83,7 +83,7 @@ public class DriverStation implements RobotState.Interface {
    * @return True if autonomous mode should be enabled, false otherwise.
    */
   public boolean isAutonomous() {
-	  return RobotState.isTest();
+	  return RobotState.isAutonomous();
   }
 
   /**
