@@ -16,7 +16,16 @@ import edu.wpi.first.wpilibj.tables.ITable;
  * @author Thomas Clark
  */
 public class PowerDistributionPanel extends SensorBase implements LiveWindowSendable {
+	
+	public int CANId;
+	
 	public PowerDistributionPanel() {
+		CANId = 0;
+	}
+	
+	public PowerDistributionPanel(int CANId)
+	{
+		this.CANId = CANId;
 	}
 
 	/**

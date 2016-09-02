@@ -78,6 +78,9 @@ public class EmulatorMain
 					error.printStackTrace();
 					System.exit(1);
 				}
+				
+				//clean up huuuge reflections object
+				System.gc();
 			}
     	}, "Robot Main Class Finder Thread");
         
@@ -97,7 +100,7 @@ public class EmulatorMain
         //may as well start up NetworkTables while we wait
         
         //need to sort out native library issue first
-        //NetworkTable.setClientMode();
+        //NetworkTable.setServerMode();
         //NetworkTable.initialize();
         
         try
