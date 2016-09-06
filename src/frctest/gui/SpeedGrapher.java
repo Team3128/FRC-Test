@@ -45,7 +45,6 @@ public class SpeedGrapher extends Graph implements ActionListener {
 	private final static int POINTS_PER_SEC = 10;
 	private final static int LINES_PER_UNIT = 10; //number of gridlines per 1 motor power
 
-	long estimatedTime = 0;
 	long startTime;
 	
 	int timerTimesFired = 1;
@@ -59,7 +58,7 @@ public class SpeedGrapher extends Graph implements ActionListener {
 	 * @param _height Desired height of the graph.
 	 */
 	public SpeedGrapher(int width, int height, SpeedController speedController) {
-		super(width, height, GRAPH_LENGTH_SEC * POINTS_PER_SEC, width / (double)GRAPH_LENGTH_SEC, height / (double)LINES_PER_UNIT, height / 2);
+		super(width, height, GRAPH_LENGTH_SEC, POINTS_PER_SEC, LINES_PER_UNIT, height / 2);
 		
 		this.speedController = speedController;
 		
@@ -75,20 +74,23 @@ public class SpeedGrapher extends Graph implements ActionListener {
 	@Override
 	//called when the timer fires
 	public void actionPerformed(ActionEvent e)
-	{
-		estimatedTime += delayMs;
-		
-		long exactTime = System.currentTimeMillis() - startTime;
-		
-		System.out.printf("Estimated runtime: %d, Exact runtime: %d, diff: %d", estimatedTime, exactTime, estimatedTime - exactTime);
-		
-		//the graph is scaled by LINES_PER_UNIT because the graph is in 1/LINES_PER_UNIT scale
+	{		
+		//the graph is scaled by LINES_PER_UNIT because the graph is in 1/LINES_PER_UNIT scale so that the gridlines are correct
 		addPoint(speedController.get() * LINES_PER_UNIT);
 		
-		
 		//correct for timer drift
-		long timeOffset = (System.currentTimeMillis() - startTime) - (timerTimesFired * delayMs);
+		long exactTime = System.currentTimeMillis() - startTime;
+
+		long timeOffset = exactTime - (timerTimesFired * delayMs);
 		
-		updateTimer.setDelay(delayMs - (int)timeOffset);
+		int newDelay = delayMs - (int)timeOffset;
+				
+		if(newDelay < 0)
+		{
+			newDelay = 0;
+		}
+		
+		updateTimer.setDelay(newDelay);
+		++timerTimesFired;
 	}
 }

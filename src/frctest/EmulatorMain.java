@@ -4,6 +4,7 @@ package frctest;
 import java.awt.Image;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -17,6 +18,7 @@ import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.SampleRobot;
 import edu.wpi.first.wpilibj.SoftwareTimer;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 /*
  *  This file is part of frcjcss.
@@ -47,17 +49,16 @@ public class EmulatorMain
     //main() is not called by junit, so in test mode it stays initialized to false.
     public static boolean enableGUI = false;
     
-    //true if the JavaJoystic native library has been loaded and it is safe to create com.centralnexus.input.Joystick classes
+    //true if the JavaJoystick native library has been loaded and it is safe to create com.centralnexus.input.Joystick classes
     public static boolean hasNativeJoystickLibrary = true;
     
     public static Image appIcon;
-    
-    @SuppressWarnings("unchecked")
-	public static void main(String[] args)
-    {
-
+        
+    public static void main(String[] args)
+    {    	    	
     	enableGUI = true;
     	appIcon = new ImageIcon(EmulatorMain.class.getClassLoader().getResource("images/Icon_attempt3.png")).getImage();
+    	
     	
     	//do this stuff in a different thread while the dialog is running because it takes like 3 seconds
     	final ArrayList<Class<? extends RobotBase>> mainClasses = new ArrayList<Class<? extends RobotBase>>();
@@ -97,11 +98,11 @@ public class EmulatorMain
                         options,
                         options[0]);
         
-        //may as well start up NetworkTables while we wait
         
-        //need to sort out native library issue first
-        //NetworkTable.setClientMode();
-        //NetworkTable.initialize();
+        //may as well start up NetworkTables while we wait
+        NetworkTable.setServerMode();
+        NetworkTable.initialize();
+
         
         try
 		{
@@ -122,6 +123,18 @@ public class EmulatorMain
         //remove the built-in classes
         mainClasses.remove(IterativeRobot.class);
         mainClasses.remove(SampleRobot.class);
+        
+        //sort the classes alphabetically
+        mainClasses.sort(new Comparator<Class<? extends RobotBase>>()
+		{
+
+			@Override
+			public int compare(Class<? extends RobotBase> class1, Class<? extends RobotBase> class2)
+			{
+				return class1.getSimpleName().compareTo(class2.getSimpleName());
+			}
+	
+		});
         
         //figure out which class to use
         int mainClassIndex = 0;
@@ -162,11 +175,13 @@ public class EmulatorMain
         	hasNativeJoystickLibrary = false;
         }
         
+        
         try
 		{
-			Class<? extends RobotBase> clazz = (Class<? extends RobotBase>) mainClasses.toArray()[mainClassIndex];
+			Class<? extends RobotBase> clazz = (Class<? extends RobotBase>) mainClasses.get(mainClassIndex);
 			Constructor<?> constructor = clazz.getConstructor();
 			robot = (RobotBase) constructor.newInstance();
+			System.out.println("Constructed main class!");
 		}
         catch (Exception e)
 		{
@@ -185,23 +200,17 @@ public class EmulatorMain
         
         Timer.SetImplementation(new SoftwareTimer());
         
-        Thread robotCodeThread = new Thread(() ->
-        {
-        	 try
-             {
-             	robot.startCompetition();
-             }
-             catch(Exception ex)
-             {
-             	System.err.println("Robot code threw an " + ex.getClass().getSimpleName() + ": " + ex.getMessage());
-             	ex.printStackTrace();
-             	System.exit(2);
-             }
-        });
-        
-        robotCodeThread.setDaemon(true);
-        robotCodeThread.start();
-        
+
+    	 try
+         {
+         	robot.startCompetition();
+         }
+         catch(Exception ex)
+         {
+         	System.err.println("Robot code threw an " + ex.getClass().getSimpleName() + ": " + ex.getMessage());
+         	ex.printStackTrace();
+         }
+                
     }
     
     static class RobotStateProxy implements RobotState.Interface

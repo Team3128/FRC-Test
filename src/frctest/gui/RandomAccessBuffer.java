@@ -17,6 +17,8 @@ public class RandomAccessBuffer <T>
      * current "zero" index
      */
     private int currentStartIndex;
+    
+    
     private int size = 0;
 
     /**
@@ -68,8 +70,6 @@ public class RandomAccessBuffer <T>
             throw new IllegalArgumentException("Tried to add element \"" + element.toString() + "\" to 0 length buffer!");
         }
 
-        elements[currentStartIndex] = element;
-
         if(size < elements.length)
         {
             ++size;
@@ -78,12 +78,15 @@ public class RandomAccessBuffer <T>
         //decrement start index
         if(currentStartIndex == 0)
         {
-            currentStartIndex = elements.length - 1; 
+            currentStartIndex = elements.length - 1;
         }
         else
         {
             --currentStartIndex;
         }
+        
+        elements[currentStartIndex] = element;
+
     }
 
     /** 
@@ -92,7 +95,7 @@ public class RandomAccessBuffer <T>
     */
     private int calcInternalIndex(int apparentIndex)
     {
-        if (apparentIndex >= elements.length)
+        if (apparentIndex >= size)
         {
             throw new ArrayIndexOutOfBoundsException("Index: " + apparentIndex + ", size: " + size);
         }
@@ -103,7 +106,7 @@ public class RandomAccessBuffer <T>
         	internalIndex -= elements.length - 1;
         }
 
-        return apparentIndex;
+        return internalIndex;
     }
 
     /**
@@ -157,7 +160,8 @@ public class RandomAccessBuffer <T>
         
     }
 
-    public String ToString()
+    @Override
+    public String toString()
     {
         StringBuilder retval = new StringBuilder();
         retval.append('{');
@@ -166,7 +170,7 @@ public class RandomAccessBuffer <T>
         for (int index = 0; index < size; ++index)
         {
             retval.append('[');
-            retval.append(get(index).toString());
+            retval.append(String.valueOf(get(index)));
             retval.append(']');
 
             if(index < size - 1)
@@ -176,7 +180,12 @@ public class RandomAccessBuffer <T>
         }
 
         retval.append('}');
-
+//        
+//        retval.append(" iind: ");
+//        retval.append(currentStartIndex);
+//        retval.append(Arrays.toString(elements));
+        
+        
         return retval.toString();
     }
 }

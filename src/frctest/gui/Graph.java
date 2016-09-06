@@ -24,7 +24,7 @@ import javax.swing.JPanel;
 
 
 /**
- * Handles a scrolling graph.
+ * Handles a scrolling graph, for a quantity over time.
  * 
  * @author Patrick Jameson
  * @version 11.20.2010.0
@@ -35,39 +35,38 @@ public class Graph extends JPanel {
 	 */
 	private static final long serialVersionUID = 6204156868436347448L;
 	
-	private int width, height, mousePreY, xAxisLoc;
+	private int width, height, mousePreY, xAxisLoc, pointsPerGraph;
 
 	private double yPixelsPerUnit, xPixelsPerPoint, xPixelsPerGridline;
 	
 	//Distance the grid has been shifted. Reset once it reaches one gridline.  Always less than one gridline-width.
 	private double xOffsetDist; 
-	
-	//private double[][] points = {};
-	
+		
 	//in pixel coordinates
 	private RandomAccessBuffer<Integer> points;
 	
 	/**
 	 * 
+	 * Creates a Graph.  Gridelines will be added once per second.
+	 * 
 	 * @param _width Width of the graph, in px.
 	 * @param _height Height of the graph, in px.
-	 * @param pointsPerGraph Number of points of data on the graph.
-	 * @param xScale Pixels per gridline in the x direction.
-	 * @param yScale Pixels per unit in the y direction.  Also used for placing gridlines.
 	 * @param xAxisLoc Height of the X axis, in pixels.
 	 */
-	public Graph(int _width, int _height, int pointsPerGraph, double xScale, double yScale, int yAxisLoc)
+	public Graph(int _width, int _height, double lengthSec, double pointsPerSec, double linesPerUnit, int xAxisLoc)
 	{
 		width = _width;
 		height = _height;
+	
+		pointsPerGraph = (int)Math.round(lengthSec * pointsPerSec);
 		
 		this.xPixelsPerPoint = ((double)width) / pointsPerGraph;
-		this.xPixelsPerGridline = xScale;
-		this.yPixelsPerUnit = yScale;	
+		this.xPixelsPerGridline = width / pointsPerSec;
+		this.yPixelsPerUnit = height / linesPerUnit;	
 		
 		xOffsetDist = 0;
 		
-		this.xAxisLoc = yAxisLoc;
+		this.xAxisLoc = xAxisLoc;
 		
 		points = new RandomAccessBuffer<>(pointsPerGraph);
 	}
@@ -90,16 +89,16 @@ public class Graph extends JPanel {
 		//draw grid
 		g.setColor(new Color(230, 230, 230));//greyish
 		for (int x = 0;x <= width;x+=xPixelsPerGridline)
+		{
 			g.drawLine(x + (int)xOffsetDist, 0, x + (int)xOffsetDist, height);
+		}
 		
 		for (int y = 0;y <=height;y+=yPixelsPerUnit)
-			g.drawLine(0, y, width, y);
-		
-		if(xOffsetDist >= xPixelsPerGridline)
 		{
-			xOffsetDist -= xPixelsPerGridline;
+			g.drawLine(0, y, width, y);
 		}
-		xOffsetDist += xPixelsPerPoint;
+		
+
 				
 		//draws x axis.
 		g.setColor(Color.black);
@@ -112,27 +111,33 @@ public class Graph extends JPanel {
 				
 		final int numPoints = points.getSize();
 		
-		try
+		for (int i = 0;i < numPoints ;i++) 
 		{
-			for (int i = 0;i < numPoints ;i++) 
-			{
-				int x = (int)((numPoints - i - 1) * xPixelsPerPoint);
-				int y = points.get(i) + xAxisLoc;
-				
-				//g.fillOval(x-scale/6, y-scale/6, scale/3, scale/3);//draws a dot at each point.
-				if (i > 0)
-				{
-					g.drawLine(x, y, lastX, lastY);
-				}
-				
-				lastX = x;
-				lastY = y;
-			}
-		}
-		catch(NullPointerException ex)
-		{
+			int x = (int)((numPoints - i - 1) * xPixelsPerPoint);
+			int y = points.get(i) + xAxisLoc;
 			
+			//g.fillOval(x-scale/6, y-scale/6, scale/3, scale/3);//draws a dot at each point.
+			if (i > 0)
+			{
+				g.drawLine(x, y, lastX, lastY);
+			}
+			
+			lastX = x;
+			lastY = y;
 		}
+		
+		//if the graph line covers the whole graph, 
+		//we want the gridlines to move backward to make it look like the graph is moving forward
+		if(numPoints == pointsPerGraph)
+		{
+			if(xOffsetDist <= -xPixelsPerGridline)
+			{
+				xOffsetDist += xPixelsPerGridline;
+			}
+			xOffsetDist -= xPixelsPerPoint;
+		}
+		
+		//System.out.println(points.toString());
 		
 		//draws box next to mouse showing points.
 		/*g.setColor(Color.black);
