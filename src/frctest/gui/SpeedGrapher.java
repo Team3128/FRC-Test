@@ -42,8 +42,8 @@ public class SpeedGrapher extends Graph implements ActionListener {
 	private final int delayMs;
 
 	private final static int GRAPH_LENGTH_SEC = 10;	
-	private final static int POINTS_PER_SEC = 10;
-	private final static int LINES_PER_UNIT = 10; //number of gridlines per 1 motor power
+	private final static int POINTS_PER_SEC = 20;
+	private final static int UNITS_PER_GRAPH = 10; //number of gridlines per 1 motor power
 
 	long startTime;
 	
@@ -58,7 +58,8 @@ public class SpeedGrapher extends Graph implements ActionListener {
 	 * @param _height Desired height of the graph.
 	 */
 	public SpeedGrapher(int width, int height, SpeedController speedController) {
-		super(width, height, GRAPH_LENGTH_SEC, POINTS_PER_SEC, LINES_PER_UNIT, height / 2);
+		super(width, height, GRAPH_LENGTH_SEC, POINTS_PER_SEC, UNITS_PER_GRAPH * 2, height / 2);
+		//UNITS_PER_GRAPH is multiplied by 2 because the x axis is in the middle and the graph goes from -1 to 1
 		
 		this.speedController = speedController;
 		
@@ -75,8 +76,8 @@ public class SpeedGrapher extends Graph implements ActionListener {
 	//called when the timer fires
 	public void actionPerformed(ActionEvent e)
 	{		
-		//the graph is scaled by LINES_PER_UNIT because the graph is in 1/LINES_PER_UNIT scale so that the gridlines are correct
-		addPoint(speedController.get() * LINES_PER_UNIT);
+		//the graph is scaled by UNITS_PER_GRAPH because the graph is in 1/UNITS_PER_GRAPH scale so that the gridlines are correct
+		addPoint(speedController.get() * UNITS_PER_GRAPH);
 		
 		//correct for timer drift
 		long exactTime = System.currentTimeMillis() - startTime;

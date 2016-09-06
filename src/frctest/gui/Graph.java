@@ -1,6 +1,7 @@
 package frctest.gui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 
@@ -35,7 +36,12 @@ public class Graph extends JPanel {
 	 */
 	private static final long serialVersionUID = 6204156868436347448L;
 	
-	private int width, height, mousePreY, xAxisLoc, pointsPerGraph;
+	/**
+	 * Y coordinate of the X axis.  Distance from the TOP of the graph.
+	 */
+	private int xAxisLoc;
+	
+	private int width, height, mousePreY, pointsPerGraph;
 
 	private double yPixelsPerUnit, xPixelsPerPoint, xPixelsPerGridline;
 	
@@ -49,26 +55,30 @@ public class Graph extends JPanel {
 	 * 
 	 * Creates a Graph.  Gridelines will be added once per second.
 	 * 
-	 * @param _width Width of the graph, in px.
-	 * @param _height Height of the graph, in px.
-	 * @param xAxisLoc Height of the X axis, in pixels.
+	 * @param width Width of the graph, in px.
+	 * @param height Height of the graph, in px.
+	 * @param unitsPerGraph Number of units (and lines) from the bottom to the top of the graph.
+	 * @param xAxisHeight Height of the X axis, in pixels, from the bottom of the graph.
 	 */
-	public Graph(int _width, int _height, double lengthSec, double pointsPerSec, double linesPerUnit, int xAxisLoc)
+	public Graph(int width, int height, double lengthSec, double pointsPerSec, double unitsPerGraph, int xAxisHeight)
 	{
-		width = _width;
-		height = _height;
+		setPreferredSize(new Dimension(width, height));
+		this.width = width;
+		this.height = height;
 	
 		pointsPerGraph = (int)Math.round(lengthSec * pointsPerSec);
 		
 		this.xPixelsPerPoint = ((double)width) / pointsPerGraph;
 		this.xPixelsPerGridline = width / pointsPerSec;
-		this.yPixelsPerUnit = height / linesPerUnit;	
+		this.yPixelsPerUnit = height / unitsPerGraph;	
 		
 		xOffsetDist = 0;
 		
-		this.xAxisLoc = xAxisLoc;
+		this.xAxisLoc = height - xAxisHeight;
 		
 		points = new RandomAccessBuffer<>(pointsPerGraph);
+		
+		setDoubleBuffered(true);
 	}
 	
 	/**
@@ -114,7 +124,7 @@ public class Graph extends JPanel {
 		for (int i = 0;i < numPoints ;i++) 
 		{
 			int x = (int)((numPoints - i - 1) * xPixelsPerPoint);
-			int y = points.get(i) + xAxisLoc;
+			int y = height - points.get(i) - xAxisLoc; //swing vertical coordinates are reversed
 			
 			//g.fillOval(x-scale/6, y-scale/6, scale/3, scale/3);//draws a dot at each point.
 			if (i > 0)
@@ -154,10 +164,14 @@ public class Graph extends JPanel {
 	/**
 	 * Sets the points to be graphed.
 	 * 
+	 * Points are shifted vertically according to the X axis height, so that 0 equals the X axis height.  So points can be negative if the x axis height is greater than 0.
+	 * 
 	 * @param _points points to be graphed in the format of _points[point number][0 for x and 1 for y]
 	 */
 	public void addPoint(double point) 
 	{
+		System.out.println("point: " + point);
+		
 		int pointPx = (int)(point * yPixelsPerUnit);
 		points.enqueue(pointPx);
 		repaint();
@@ -183,14 +197,17 @@ public class Graph extends JPanel {
 	 * moves the graph vertically by mX
 	 * @param mX move the x axis mX pixels
 	 */
-	public void moveGraph(int mX) {
+	public void moveGraph(int mX) 
+	{
+		int newXAxisLoc = xAxisLoc + mX;
+		if(newXAxisLoc >= 0 && xAxisLoc < height)
 		xAxisLoc += mX;
 		repaint();
 	}
 	
 	/**
 	 * Sets the position of the X axis in pixels.
-	 * @param pY New height of X axis.  Must not be greater than height.
+	 * @param pY New height of X axis (from the bottom of the graph).  Must not be greater than height.
 	 */
 	public void setXAxisPosition(int pX)
 	{
@@ -199,7 +216,7 @@ public class Graph extends JPanel {
 			throw new IllegalArgumentException("Invalid X axis position " + pX);
 		}
 		
-		xAxisLoc = pX;
+		xAxisLoc = height - pX;
 		repaint();
 	}
 	

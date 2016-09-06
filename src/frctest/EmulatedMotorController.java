@@ -55,7 +55,7 @@ public class EmulatedMotorController implements ComponentListener, ActionListene
 	        //frame.setResizable(false);
 	        frame.setLocation(510, 0);
 	        frame.setLayout(new BorderLayout());
-	        frame.setPreferredSize(new Dimension(300, 320));
+	        frame.setPreferredSize(new Dimension(300, 300));
 	        
 	        //tells the current speed of the talon in % above the graph.
 	        speedLabel = new JLabel("Current Speed: " + (speed*100) + "%");
@@ -64,7 +64,7 @@ public class EmulatedMotorController implements ComponentListener, ActionListene
 	        //allows user to stop the movement of the graph. button located under the graph.
 	        startStop = new JButton("Stop Graph");
 	        startStop.addActionListener(this);
-	        frame.add(startStop, BorderLayout.SOUTH);
+	        //frame.add(startStop, BorderLayout.SOUTH);
 	        
 	        //makes the actual graph.
 	        graph = new SpeedGrapher(300, 300, this);
