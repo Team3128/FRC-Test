@@ -82,6 +82,9 @@ public class EmulatorMain
 					error.printStackTrace();
 					System.exit(1);
 				}
+				
+				//clean up huuuge reflections object
+				System.gc();
 			}
     	}, "Robot Main Class Finder Thread");
         
@@ -98,11 +101,9 @@ public class EmulatorMain
                         options,
                         options[0]);
         
-        
         //may as well start up NetworkTables while we wait
         NetworkTable.setServerMode();
         NetworkTable.initialize();
-
         
         try
 		{

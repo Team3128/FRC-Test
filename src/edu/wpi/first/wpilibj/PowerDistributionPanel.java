@@ -17,16 +17,17 @@ import edu.wpi.first.wpilibj.tables.ITable;
  */
 public class PowerDistributionPanel extends SensorBase implements LiveWindowSendable {
 	
-	final int canid;
+	public int CANId;
 	
 	public PowerDistributionPanel() {
-		this.canid = 0;
-	}
-
-	public PowerDistributionPanel(int canid) {
-		this.canid = canid;
+		CANId = 0;
 	}
 	
+	public PowerDistributionPanel(int CANId)
+	{
+		this.CANId = CANId;
+	}
+
 	/**
 	 * Query the input voltage of the PDP
 	 * @return The voltage of the PDP in volts
