@@ -189,13 +189,13 @@ public class CameraServer {
 //
 //
 //
-//    /**
-//     * check if auto capture is started
-//     *
-//     */
-//    public synchronized boolean isAutoCaptureStarted() {
-//        return m_autoCaptureStarted;
-//    }
+    /**
+     * check if auto capture is started
+     *
+     */
+    public synchronized boolean isAutoCaptureStarted() {
+        return m_autoCaptureStarted;
+    }
 //
 //    /**
 //     * Sets the size of the image to use. Use the public kSize constants
