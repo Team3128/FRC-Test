@@ -170,7 +170,7 @@ public class Graph extends JPanel {
 	 */
 	public void addPoint(double point) 
 	{
-		System.out.println("point: " + point);
+		//System.out.println("point: " + point);
 		
 		int pointPx = (int)(point * yPixelsPerUnit);
 		points.enqueue(pointPx);
