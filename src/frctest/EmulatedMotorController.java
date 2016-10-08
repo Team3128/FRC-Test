@@ -25,6 +25,7 @@ public class EmulatedMotorController implements ComponentListener, ActionListene
 	public double speed;
     public boolean enabled;
     public boolean inverted;
+    public int channel;
     
     private boolean isGraphRunning;
     
@@ -44,6 +45,7 @@ public class EmulatedMotorController implements ComponentListener, ActionListene
     {
     	inverted = false;
     	enabled = false;
+    	this.channel = channel;
     	
     	if(EmulatorMain.enableGUI)
     	{

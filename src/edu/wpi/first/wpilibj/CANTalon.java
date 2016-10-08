@@ -552,7 +552,7 @@ public class CANTalon extends EmulatedMotorController implements  PIDOutput, PID
 //        return (double) CanTalonJNI.GetAppliedThrottle(m_handle) / 1023.0;
 //    }
 	  
-	  return m_setPoint;
+	  return super.get();
 	}
 
 	/**

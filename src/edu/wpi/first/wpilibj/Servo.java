@@ -42,17 +42,20 @@ public class Servo {
 	public Servo(int channel) {
 		position = 0;
 		
-		frame = new JFrame("Servo Simulator: " + channel);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setPreferredSize(new Dimension(300, 100));
-		frame.setLayout(new BorderLayout());
-        frame.setIconImage(EmulatorMain.appIcon);
-		
-		posLabel = new JLabel("Position: " + position);
-		frame.add(posLabel, BorderLayout.NORTH);
-		
-		frame.pack();
-		frame.setVisible(true);
+		if(EmulatorMain.enableGUI)
+		{
+			frame = new JFrame("Servo Simulator: " + channel);
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame.setPreferredSize(new Dimension(300, 100));
+			frame.setLayout(new BorderLayout());
+	        frame.setIconImage(EmulatorMain.appIcon);
+			
+			posLabel = new JLabel("Position: " + position);
+			frame.add(posLabel, BorderLayout.NORTH);
+			
+			frame.pack();
+			frame.setVisible(true);
+		}
 	}
 	
 	/**
@@ -61,6 +64,12 @@ public class Servo {
 	 */
 	public void set(double value) {
 		position = limit(value);
+		
+		if(EmulatorMain.enableGUI)
+		{
+			
+		}
+		
 		posLabel.setText("Position: " + position); 
 	}
 	
@@ -81,10 +90,41 @@ public class Servo {
 		if(value > 1.0) {
 			l = 1.0;
 		}
-		else if(value < -1.0) {
-			l = -1.0;
+		else if(value < 0) {
+			l = 0;
 		}
 		return l;
 	}
-
+	
+	  /**
+	   * Get the servo angle.
+	   *
+	   * Assume that the servo angle is linear with respect to the PWM value (big
+	   * assumption, need to test).
+	   *$
+	   * @return The angle in degrees to which the servo is set.
+	   */
+	public double getAngle(double angle)
+	{
+		return position * 180;
+	}
+	
+	  /**
+	   * Set the servo angle.
+	   *
+	   * Assume that the servo angle is linear with respect to the PWM value (big
+	   * assumption, need to test).
+	   *
+	   * Servo angles that are out of the supported range of the servo simply
+	   * "saturate" in that direction In other words, if the servo has a range of (X
+	   * degrees to Y degrees) than angles of less than X result in an angle of X
+	   * being set and angles of more than Y degrees result in an angle of Y being
+	   * set.
+	   *
+	   * @param degrees The angle in degrees to set the servo.
+	   */
+	public void setAngle(double angle)
+	{
+		set(angle / 180.0);
+	}
 }
