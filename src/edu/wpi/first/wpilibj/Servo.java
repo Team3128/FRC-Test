@@ -67,10 +67,8 @@ public class Servo {
 		
 		if(EmulatorMain.enableGUI)
 		{
-			
+			posLabel.setText("Position: " + position); 
 		}
-		
-		posLabel.setText("Position: " + position); 
 	}
 	
 	/**
@@ -81,19 +79,18 @@ public class Servo {
 	}
 	
 	/**
-	 * Limits to -1.0 and 1.0.
+	 * Limits to 0 and 1.0.
 	 * @param value The value that needs to be limited.
-	 * @return The limited value if greater than 1.0 or less than -1.0, otherwise the original value.
+	 * @return The limited value if greater than 1.0 or less than 0, otherwise the original value.
 	 */
 	private double limit(double value) {
-		double l = 0.0;
 		if(value > 1.0) {
-			l = 1.0;
+			value = 1.0;
 		}
 		else if(value < 0) {
-			l = 0;
+			value = 0;
 		}
-		return l;
+		return value;
 	}
 	
 	  /**
@@ -104,7 +101,7 @@ public class Servo {
 	   *$
 	   * @return The angle in degrees to which the servo is set.
 	   */
-	public double getAngle(double angle)
+	public double getAngle()
 	{
 		return position * 180;
 	}
