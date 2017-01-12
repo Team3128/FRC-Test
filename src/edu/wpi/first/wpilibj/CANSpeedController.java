@@ -7,6 +7,8 @@
 
 package edu.wpi.first.wpilibj;
 
+import com.ctre.CANTalon;
+
 import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
 import edu.wpi.first.wpilibj.tables.ITable;
 import edu.wpi.first.wpilibj.tables.ITableListener;

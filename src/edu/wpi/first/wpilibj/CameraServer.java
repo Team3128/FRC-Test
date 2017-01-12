@@ -9,6 +9,8 @@ import com.ni.vision.NIVision.Image;
 import com.ni.vision.NIVision.RawData;
 import com.ni.vision.VisionException;
 
+import edu.wpi.cscore.UsbCamera;
+
 //replicates CameraServer.cpp in java lib
 
 public class CameraServer {
@@ -111,47 +113,59 @@ public class CameraServer {
 
     /**
      * Start automatically capturing images to send to the dashboard.
-     * You should call this method to just see a camera feed on the dashboard
-     * without doing any vision processing on the roboRIO. {@link #setImage}
-     * shouldn't be called after this is called.
-     * This overload calles {@link #startAutomaticCapture(String)} with the
-     * default camera name
+     *
+     * <p>This overload calls {@link #startAutomaticCapture(String, int)} with
+     * a name of "USB Camera {dev}".
+     *
+     * @param dev The device number of the camera interface
      */
-    public void startAutomaticCapture() {
-    	//TODO not implemented
+    public UsbCamera startAutomaticCapture(int dev) {
+//      UsbCamera camera = new UsbCamera("USB Camera " + dev, dev);
+//      startAutomaticCapture(camera);
+//      return camera;
+    	
+    	return null;
     }
 
     /**
      * Start automatically capturing images to send to the dashboard.
      *
-     * You should call this method to just see a camera feed on the dashboard
-     * without doing any vision processing on the roboRIO. {@link #setImage}
-     * shouldn't be called after this is called.
-     *
-     * @param cameraName
-     *            The name of the camera interface (e.g. "cam1")
+     * @param name The name to give the camera
+     * @param dev The device number of the camera interface
      */
-    public void startAutomaticCapture(String cameraName) {
-    	//TODO not implemented
-
+    public UsbCamera startAutomaticCapture(String name, int dev) {
+     // UsbCamera camera = new UsbCamera(name, dev);
+     // startAutomaticCapture(camera);
+     // return camera;
+    	
+    	return null;
     }
-//
-//    public synchronized void startAutomaticCapture(USBCamera camera) {
-//        if (m_autoCaptureStarted) return;
-//        m_autoCaptureStarted = true;
-//        m_camera = camera;
-//
-//        m_camera.startCapture();
-//
-//        Thread captureThread = new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    capture();
-//                }
-//            });
-//        captureThread.setName("Camera Capture Thread");
-//        captureThread.start();
+
+    /**
+     * Start automatically capturing images to send to the dashboard.
+     *
+     * @param name The name to give the camera
+     * @param path The device path (e.g. "/dev/video0") of the camera
+     */
+    public UsbCamera startAutomaticCapture(String name, String path) {
+      //UsbCamera camera = new UsbCamera(name, path);
+      //startAutomaticCapture(camera);
+      //return camera;
+    	return null;
+    }
+
+//    /**
+//     * Start automatically capturing images to send to the dashboard from
+//     * an existing camera.
+//     *
+//     * @param camera Camera
+//     */
+//    public void startAutomaticCapture(VideoSource camera) {
+//      addCamera(camera);
+//      VideoSink server = addServer("serve_" + camera.getName());
+//      server.setSource(camera);
 //    }
+
 //
 //    protected void capture() {
 //        Image frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
