@@ -58,7 +58,15 @@ public class AnalogGyro implements Gyro {
     
     
     public AnalogGyro(int channel) {
-        frame = new JFrame("Gyro Emulator: " + channel);
+        this("Analog Gyro channel " + channel);
+    }
+    
+    /**
+     * Called from subclasses
+     * @param name
+     */
+    protected AnalogGyro(String name) {
+        frame = new JFrame(name);
         
         frame.setLayout(new BorderLayout());
         frame.setPreferredSize(new Dimension(JSWIDTH, JSHEIGHT- 50));

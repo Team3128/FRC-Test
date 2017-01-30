@@ -3,7 +3,6 @@ package edu.wpi.first.wpilibj;
 
 import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
 import edu.wpi.first.wpilibj.tables.ITable;
-import edu.wpi.first.wpilibj.util.BoundaryException;
 
 /**
  * Class to read quad encoders. Quadrature encoders are devices that count shaft
@@ -40,7 +39,7 @@ public class Encoder extends SensorBase implements CounterBase, PIDSource, LiveW
 	private EncodingType m_encodingType = EncodingType.k4X;
 	private int m_encodingScale; // 1x, 2x, or 4x, per the encodingType
 
-	private PIDSourceParameter m_pidSource;
+	private PIDSourceType m_pidSource;
 
 	/**
 	 * Common initialization code for Encoders. This code allocates resources
@@ -71,7 +70,7 @@ public class Encoder extends SensorBase implements CounterBase, PIDSource, LiveW
 			break;
 		}
 		m_distancePerPulse = 1.0;
-		m_pidSource = PIDSourceParameter.kDistance;
+		m_pidSource = PIDSourceType.kDisplacement;
 	}
 
 	/**
@@ -417,34 +416,37 @@ public class Encoder extends SensorBase implements CounterBase, PIDSource, LiveW
 		return 1;
 	}
 
-	/**
-	 * Set which parameter of the encoder you are using as a process control
-	 * variable. The encoder class supports the rate and distance parameters.
-	 *
-	 * @param pidSource
-	 *            An enum to select the parameter.
-	 */
-	public void setPIDSourceParameter(PIDSourceParameter pidSource) {
-		BoundaryException.assertWithinBounds(pidSource.value, 0, 1);
-		m_pidSource = pidSource;
-	}
+	  /**
+	   * Set which parameter of the encoder you are using as a process control variable. The encoder
+	   * class supports the rate and distance parameters.
+	   *
+	   * @param pidSource An enum to select the parameter.
+	   */
+	  public void setPIDSourceType(PIDSourceType pidSource) {
+	    m_pidSource = pidSource;
+	  }
 
-	/**
-	 * Implement the PIDSource interface.
-	 *
-	 * @return The current value of the selected source parameter.
-	 */
-	public double pidGet() {
-		switch (m_pidSource.value) {
-		case PIDSourceParameter.kDistance_val:
-			return getDistance();
-		case PIDSourceParameter.kRate_val:
-			return getRate();
-		default:
-			return 0.0;
-		}
-	}
+	  @Override
+	  public PIDSourceType getPIDSourceType() {
+	    return m_pidSource;
+	  }
 
+	  /**
+	   * Implement the PIDSource interface.
+	   *
+	   * @return The current value of the selected source parameter.
+	   */
+	  public double pidGet() {
+	    switch (m_pidSource) {
+	      case kDisplacement:
+	        return getDistance();
+	      case kRate:
+	        return getRate();
+	      default:
+	        return 0.0;
+	    }
+	  }
+	  
 	/**
 	 * Set the index source for the encoder.  When this source rises, the encoder count automatically resets.
 	 *

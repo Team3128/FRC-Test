@@ -59,6 +59,9 @@ public class Ultrasonic extends SensorBase implements PIDSource, LiveWindowSenda
 	
 	private int pingOutputChannel;
 	private int echoInputChannel;
+	
+	protected PIDSourceType m_pidSource = PIDSourceType.kDisplacement;
+
 
 	/**
 	 * Initialize the Ultrasonic Sensor. This is the common code that
@@ -342,4 +345,18 @@ public class Ultrasonic extends SensorBase implements PIDSource, LiveWindowSenda
 	 */
 	public void stopLiveWindowMode() {
 	}
+
+	  @Override
+	  public void setPIDSourceType(PIDSourceType pidSource) {
+	    if (!pidSource.equals(PIDSourceType.kDisplacement)) {
+	      throw new IllegalArgumentException("Only displacement PID is allowed for ultrasonics.");
+	    }
+	    m_pidSource = pidSource;
+	  }
+	
+	  @Override
+	  public PIDSourceType getPIDSourceType() {
+	    return m_pidSource;
+	  }
+
 }

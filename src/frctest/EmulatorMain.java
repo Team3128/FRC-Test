@@ -9,6 +9,7 @@ import java.util.Comparator;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 import org.reflections.Reflections;
 
@@ -59,6 +60,10 @@ public class EmulatorMain
     	enableGUI = true;
     	appIcon = new ImageIcon(EmulatorMain.class.getClassLoader().getResource("images/Icon_attempt3.png")).getImage();
     	
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch(Exception weTried) {
+        }
     	
     	//do this stuff in a different thread while the dialog is running because it takes like 3 seconds
     	final ArrayList<Class<? extends RobotBase>> mainClasses = new ArrayList<Class<? extends RobotBase>>();
