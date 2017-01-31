@@ -154,7 +154,7 @@ public abstract class InterruptableSensorBase
    * interrupts.
    */
   public void enableInterrupts() {
-    if (!interruptEnabled) {
+    if (interruptEnabled) {
       throw new IllegalStateException("The interrupt is not allocated.");
     }
     if (interruptSynchronous) {
@@ -213,7 +213,7 @@ public abstract class InterruptableSensorBase
    * @param fallingEdge true to interrupt on falling edge
    */
   public void setUpSourceEdge(boolean risingEdge, boolean fallingEdge) {
-    if(!interruptEnabled) {
+    if(interruptEnabled) {
       triggerRisingEdge = risingEdge;
       triggerFallingEdge = fallingEdge;
     } else {

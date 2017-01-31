@@ -63,6 +63,7 @@ public class DigitalInput extends DigitalSource implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
 		state = !state;
+		onStateChange(state);
 		DigitalInputWindow.instance().updateInput(channel, state);
 	}
 }
